@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -10,7 +9,7 @@ import HeroCarousel from '@/components/ui/HeroCarousel';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { tools, categories } from '@/data/tools';
-import { Search, Star, TrendingUp, Clock, Grid3X3 } from 'lucide-react';
+import { Search, Star, TrendingUp, Clock, Grid3X3, ChevronRight } from 'lucide-react';
 
 const Index: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

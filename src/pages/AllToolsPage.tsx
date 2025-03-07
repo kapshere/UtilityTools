@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -11,6 +10,7 @@ import ToolsGrid from '@/components/ui/ToolsGrid';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 const AllToolsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
