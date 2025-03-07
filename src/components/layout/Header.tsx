@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, Moon, Sun } from 'lucide-react';
+import { Search, Menu, X, Moon, Sun, LightbulbIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -80,6 +80,10 @@ const Header: React.FC = () => {
             <Link to="/new" className="text-sm font-medium hover:text-primary transition-colors">
               New
             </Link>
+            <Link to="/suggest-tool" className="text-sm font-medium text-primary flex items-center gap-1 transition-colors">
+              <LightbulbIcon className="w-4 h-4" />
+              Suggest Tool
+            </Link>
           </nav>
           
           <Button 
@@ -139,6 +143,10 @@ const Header: React.FC = () => {
               </Link>
               <Link to="/new" className="text-sm font-medium hover:text-primary px-2 py-1 rounded-md hover:bg-secondary/50 transition-colors">
                 New
+              </Link>
+              <Link to="/suggest-tool" className="text-sm font-medium text-primary flex items-center gap-1 px-2 py-1 rounded-md hover:bg-secondary/50 transition-colors">
+                <LightbulbIcon className="w-4 h-4" />
+                Suggest Tool
               </Link>
             </nav>
           </div>

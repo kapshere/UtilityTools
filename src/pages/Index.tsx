@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import CategoryBar from '@/components/layout/CategoryBar';
 import ToolsGrid from '@/components/ui/ToolsGrid';
 import CategoryCard from '@/components/ui/CategoryCard';
+import HeroCarousel from '@/components/ui/HeroCarousel';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { tools, categories } from '@/data/tools';
@@ -36,38 +37,22 @@ const Index: React.FC = () => {
       <Header />
       
       <main className="flex-grow pt-16 pb-10">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-secondary/50 to-background py-20 px-4 overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-grid-pattern opacity-10" 
-            style={{ 
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M0 0h20v20H0z\'/%3E%3C/g%3E%3C/svg%3E")',
-              backgroundSize: '20px 20px'
-            }}
-          />
+        {/* Hero Carousel Section */}
+        <section className="relative overflow-hidden">
+          <HeroCarousel />
           
-          <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              All the tools you need,
-              <br />
-              <span className="text-primary">beautifully crafted</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              A collection of 50+ essential web tools designed with simplicity and elegance.
-              Everything you need in one place.
-            </p>
-            
+          <div className="absolute bottom-20 left-0 right-0 z-20 px-4">
             <form onSubmit={handleSearch} className="max-w-xl mx-auto relative">
               <Input
                 type="text"
                 placeholder="Search for tools..."
-                className="search-input"
+                className="search-input pl-10 pr-20 py-6 rounded-full shadow-lg"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Button 
                 type="submit"
-                className="absolute right-1.5 top-1/2 transform -translate-y-1/2 rounded-md"
+                className="absolute right-1.5 top-1/2 transform -translate-y-1/2 rounded-full"
               >
                 <Search className="h-4 w-4 mr-2" />
                 Search
@@ -77,7 +62,7 @@ const Index: React.FC = () => {
         </section>
         
         {/* Categories Bar */}
-        <section className="py-8 container mx-auto px-4">
+        <section id="categories" className="py-8 container mx-auto px-4">
           <h2 className="text-xl font-semibold mb-4 flex items-center">
             <span className="bg-primary/10 text-primary rounded-full p-1 mr-2">
               <Star className="h-4 w-4" />
