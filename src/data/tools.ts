@@ -1,4 +1,3 @@
-
 import { 
   Calculator, Clock, Calendar, QrCode, Ruler, Compass, 
   FileText, FileImage, FileVideo, FileAudio, Map, Globe, 
@@ -9,7 +8,8 @@ import {
   FlipVertical, RotateCcw, RotateCw, Heading1, Heading2, 
   Type, Quote, List, ListOrdered, Binary, BrainCircuit, 
   Cpu, Monitor, Scan, Search, FileJson, Fingerprint, 
-  FileDiff, Regex, XCircle, Check, ChevronRight, Trophy
+  FileDiff, Regex, XCircle, Check, ChevronRight, Trophy,
+  FilePdf, Briefcase
 } from "lucide-react";
 
 export type ToolType = {
@@ -68,6 +68,13 @@ export const categories: ToolCategoryType[] = [
     color: "bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400"
   },
   {
+    id: "pdf",
+    name: "PDF Tools",
+    description: "Tools for creating, editing and manipulating PDF files",
+    icon: FilePdf,
+    color: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+  },
+  {
     id: "geo",
     name: "Geographic",
     description: "Tools for geography and location-based calculations",
@@ -87,6 +94,13 @@ export const categories: ToolCategoryType[] = [
     description: "Tools for financial calculations and conversions",
     icon: DollarSign,
     color: "bg-lime-50 text-lime-600 dark:bg-lime-900/30 dark:text-lime-400"
+  },
+  {
+    id: "business",
+    name: "Business",
+    description: "Professional tools for business and enterprise use",
+    icon: Briefcase,
+    color: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
   },
   {
     id: "transforms",
@@ -518,5 +532,91 @@ export const tools: ToolType[] = [
     category: categories.find(c => c.id === "generators")!,
     path: "/tools/barcode-generator",
     icon: Barcode
+  },
+  {
+    id: "pdf-merger",
+    name: "PDF Merger",
+    description: "Combine multiple PDF files into one document",
+    category: categories.find(c => c.id === "pdf")!,
+    path: "/tools/pdf-merger",
+    icon: FilePdf,
+    featured: true,
+    new: true
+  },
+  {
+    id: "pdf-splitter",
+    name: "PDF Splitter",
+    description: "Split PDF files into multiple documents",
+    category: categories.find(c => c.id === "pdf")!,
+    path: "/tools/pdf-splitter",
+    icon: Scissors,
+    new: true
+  },
+  {
+    id: "pdf-compressor",
+    name: "PDF Compressor",
+    description: "Reduce PDF file size while maintaining quality",
+    category: categories.find(c => c.id === "pdf")!,
+    path: "/tools/pdf-compressor",
+    icon: Minimize,
+    new: true
+  },
+  {
+    id: "pdf-to-image",
+    name: "PDF to Image",
+    description: "Convert PDF pages to image formats (JPG, PNG)",
+    category: categories.find(c => c.id === "pdf")!,
+    path: "/tools/pdf-to-image",
+    icon: FileImage
+  },
+  {
+    id: "pdf-text-extractor",
+    name: "PDF Text Extractor",
+    description: "Extract text content from PDF files",
+    category: categories.find(c => c.id === "pdf")!,
+    path: "/tools/pdf-text-extractor",
+    icon: FileText
+  },
+  {
+    id: "invoice-generator",
+    name: "Invoice Generator",
+    description: "Create professional invoices for your business",
+    category: categories.find(c => c.id === "business")!,
+    path: "/tools/invoice-generator",
+    icon: FileText,
+    featured: true,
+    new: true
+  },
+  {
+    id: "expense-calculator",
+    name: "Expense Calculator",
+    description: "Calculate and track business expenses",
+    category: categories.find(c => c.id === "business")!,
+    path: "/tools/expense-calculator",
+    icon: Calculator
+  },
+  {
+    id: "profit-margin-calculator",
+    name: "Profit Margin Calculator",
+    description: "Calculate profit margins for your products or services",
+    category: categories.find(c => c.id === "business")!,
+    path: "/tools/profit-margin-calculator",
+    icon: Percent
+  },
+  {
+    id: "business-name-generator",
+    name: "Business Name Generator",
+    description: "Generate creative business name ideas",
+    category: categories.find(c => c.id === "business")!,
+    path: "/tools/business-name-generator",
+    icon: Briefcase
+  },
+  {
+    id: "roi-calculator",
+    name: "ROI Calculator",
+    description: "Calculate return on investment for business decisions",
+    category: categories.find(c => c.id === "business")!,
+    path: "/tools/roi-calculator",
+    icon: TrendingUp
   }
 ];

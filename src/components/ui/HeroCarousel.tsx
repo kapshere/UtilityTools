@@ -60,7 +60,7 @@ const HeroCarousel: React.FC = () => {
   }, [currentSlide]);
   
   return (
-    <div className="relative overflow-hidden h-[500px] md:h-[600px]">
+    <div className="relative overflow-hidden h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
       {slides.map((slide, index) => {
         const Icon = slide.icon;
         return (
@@ -86,24 +86,24 @@ const HeroCarousel: React.FC = () => {
               }}
             />
             
-            <div className="relative z-20 text-center max-w-4xl mx-auto animate-fade-in">
-              <div className="flex justify-center mb-6">
+            <div className="relative z-20 text-center max-w-4xl mx-auto animate-fade-in px-4">
+              <div className="flex justify-center mb-4 sm:mb-6">
                 <div className={cn(
-                  "w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center",
+                  "w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center",
                   "bg-primary/10 text-primary"
                 )}>
-                  <Icon className="w-8 h-8 md:w-10 md:h-10" />
+                  <Icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
                 </div>
               </div>
               
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-2 sm:mb-4">
                 {slide.title}
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed">
                 {slide.subtitle}
               </p>
               
-              <Button asChild size="lg" className="rounded-full px-6 transition-transform hover:scale-105">
+              <Button asChild size="lg" className="rounded-full px-4 sm:px-6 transition-transform hover:scale-105">
                 <a href={slide.buttonLink}>
                   {slide.buttonText}
                 </a>
@@ -117,30 +117,30 @@ const HeroCarousel: React.FC = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 w-8 h-8 sm:w-10 sm:h-10"
         onClick={prevSlide}
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
       </Button>
       
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 w-8 h-8 sm:w-10 sm:h-10"
         onClick={nextSlide}
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
       </Button>
       
       {/* Indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
         {slides.map((_, index) => (
           <button
             key={index}
             className={cn(
               "w-2 h-2 rounded-full transition-all duration-300",
               currentSlide === index 
-                ? "bg-primary w-6" 
+                ? "bg-primary w-4 sm:w-6" 
                 : "bg-primary/30 hover:bg-primary/50"
             )}
             onClick={() => setCurrentSlide(index)}
