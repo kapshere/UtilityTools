@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import type { ToolType } from '@/data/tools';
 import { Badge } from '@/components/ui/badge';
+import { Heart } from 'lucide-react';
+import { useWishlist } from '@/hooks/use-wishlist';
 
 interface ToolCardProps {
   tool: ToolType;
@@ -11,11 +13,20 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const inWishlist = isInWishlist(tool.id);
+
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(tool.id, tool.name);
+  };
+
   return (
     <Link 
       to={tool.path}
       className={cn(
-        "tool-card group animate-scale-in", 
+        "tool-card group animate-scale-in relative", 
         className
       )}
     >
@@ -55,22 +66,36 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
           {tool.description}
         </p>
         
-        <div className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-auto">
-          <span>Open Tool</span>
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="transition-transform duration-300 transform group-hover:translate-x-1"
+        <div className="inline-flex items-center justify-between w-full mt-auto">
+          <div className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+            <span>Open Tool</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              className="transition-transform duration-300 transform group-hover:translate-x-1"
+            >
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </div>
+          
+          <button 
+            onClick={handleWishlistClick}
+            className="rounded-full p-1.5 hover:bg-secondary transition-colors"
           >
-            <path d="m9 18 6-6-6-6"/>
-          </svg>
+            <Heart 
+              className={cn(
+                "w-4 h-4 transition-colors",
+                inWishlist ? "fill-red-500 text-red-500" : "text-muted-foreground"
+              )} 
+            />
+          </button>
         </div>
       </div>
     </Link>

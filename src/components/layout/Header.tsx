@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, Moon, Sun, LightbulbIcon, Grid3X3, ChevronDown, LifeBuoy } from 'lucide-react';
+import { Search, Menu, X, Moon, Sun, LightbulbIcon, Grid3X3, ChevronDown, LifeBuoy, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useWishlist } from '@/hooks/use-wishlist';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,6 +19,8 @@ const Header: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { wishlist } = useWishlist();
+  const hasWishlistItems = wishlist.length > 0;
 
   useEffect(() => {
     const checkScroll = () => {
@@ -30,7 +32,6 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Close mobile menu when navigating
     setIsMenuOpen(false);
   }, [location.pathname]);
 
@@ -144,6 +145,24 @@ const Header: React.FC = () => {
               </DropdownMenu>
               
               <Link 
+                to="/wishlist" 
+                className={cn(
+                  "px-3 py-2 rounded-md text-sm flex items-center gap-1 transition-colors relative",
+                  location.pathname === "/wishlist" 
+                    ? "bg-primary/10 text-primary" 
+                    : "text-primary hover:bg-secondary/80"
+                )}
+              >
+                <Heart className={cn("w-4 h-4", hasWishlistItems && "fill-red-500 text-red-500")} />
+                Wishlist
+                {hasWishlistItems && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Link>
+              
+              <Link 
                 to="/suggest-tool" 
                 className={cn(
                   "px-3 py-2 rounded-md text-sm flex items-center gap-1 transition-colors",
@@ -181,6 +200,26 @@ const Header: React.FC = () => {
           </div>
 
           <div className="flex md:hidden">
+            <Link 
+              to="/wishlist" 
+              className="relative mr-2"
+            >
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className={cn(
+                  location.pathname === "/wishlist" && "bg-primary/10"
+                )}
+              >
+                <Heart className={cn("h-5 w-5", hasWishlistItems && "fill-red-500 text-red-500")} />
+              </Button>
+              {hasWishlistItems && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
+            </Link>
+            
             <Button 
               variant="ghost" 
               size="icon"
@@ -259,6 +298,24 @@ const Header: React.FC = () => {
               >
                 <Grid3X3 className="w-4 h-4 mr-2" />
                 All Tools
+              </Link>
+              
+              <Link 
+                to="/wishlist" 
+                className={cn(
+                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
+                  location.pathname === "/wishlist" 
+                    ? "bg-primary/10 text-primary" 
+                    : "hover:bg-secondary/80"
+                )}
+              >
+                <Heart className={cn("w-4 h-4 mr-2", hasWishlistItems && "fill-red-500 text-red-500")} />
+                Wishlist
+                {hasWishlistItems && (
+                  <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {wishlist.length}
+                  </span>
+                )}
               </Link>
               
               <Link 

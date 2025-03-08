@@ -11,6 +11,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import CategoryPage from "./pages/CategoryPage";
 import AllToolsPage from "./pages/AllToolsPage";
 import ToolPage from "./pages/ToolPage";
+import WishlistPage from "./pages/WishlistPage";
 import SuggestTool from "./pages/SuggestTool";
 import SupportPage from "./pages/SupportPage";
 import NotFound from "./pages/NotFound";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/categories/:categoryId" element={<CategoryPage />} />
           <Route path="/all-tools" element={<AllToolsPage />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/suggest-tool" element={<SuggestTool />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<NotFound />} />

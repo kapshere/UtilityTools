@@ -4,14 +4,16 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { tools } from '@/data/tools';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { ChevronRight, ArrowLeft, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ToolRenderer from '@/components/tools/ToolRenderer';
+import { useWishlist } from '@/hooks/use-wishlist';
 
 const ToolPage: React.FC = () => {
   const { toolId } = useParams<{ toolId: string }>();
   const navigate = useNavigate();
+  const { isInWishlist, toggleWishlist } = useWishlist();
   
   const tool = tools.find(t => t.id === toolId);
   
@@ -41,6 +43,28 @@ const ToolPage: React.FC = () => {
       </div>
     );
   }
+
+  const inWishlist = isInWishlist(tool.id);
+
+  const handleWishlistToggle = () => {
+    toggleWishlist(tool.id, tool.name);
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `${tool.name} - ToolHub`,
+        text: `Check out this awesome tool: ${tool.name}`,
+        url: window.location.href,
+      }).catch(err => {
+        console.error('Error sharing:', err);
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      // Using an alert here since we're not using toasts in this component
+      alert('Link copied to clipboard!');
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -73,22 +97,51 @@ const ToolPage: React.FC = () => {
           
           {/* Tool Header */}
           <div className="mb-8 animate-slide-up">
-            <div className="flex items-center mb-4">
-              <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mr-4",
-                "bg-primary/10 text-primary dark:bg-primary/20"
-              )}>
-                <tool.icon className="w-6 h-6" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className={cn(
+                  "w-12 h-12 rounded-full flex items-center justify-center mr-4",
+                  "bg-primary/10 text-primary dark:bg-primary/20"
+                )}>
+                  <tool.icon className="w-6 h-6" />
+                </div>
+                
+                <div>
+                  <h1 className="text-3xl font-bold">{tool.name}</h1>
+                  <span className={cn(
+                    "category-chip mt-1",
+                    tool.category.color
+                  )}>
+                    {tool.category.name}
+                  </span>
+                </div>
               </div>
               
-              <div>
-                <h1 className="text-3xl font-bold">{tool.name}</h1>
-                <span className={cn(
-                  "category-chip mt-1",
-                  tool.category.color
-                )}>
-                  {tool.category.name}
-                </span>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={handleWishlistToggle}
+                  className={cn(
+                    "rounded-full transition-colors",
+                    inWishlist && "bg-primary/5"
+                  )}
+                >
+                  <Heart 
+                    className={cn(
+                      "h-5 w-5",
+                      inWishlist ? "fill-red-500 text-red-500" : ""
+                    )} 
+                  />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={handleShare}
+                  className="rounded-full"
+                >
+                  <Share2 className="h-5 w-5" />
+                </Button>
               </div>
             </div>
             
