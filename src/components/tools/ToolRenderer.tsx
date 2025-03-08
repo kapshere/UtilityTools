@@ -8,6 +8,10 @@ import JsonFormatter from './JsonFormatter';
 import Base64Encoder from './Base64Encoder';
 import PasswordGenerator from './PasswordGenerator';
 import ImageCompressor from './ImageCompressor';
+import UrlEncoder from './UrlEncoder';
+import MarkdownEditor from './MarkdownEditor';
+import ColorPicker from './ColorPicker';
+import TextCaseConverter from './TextCaseConverter';
 import NotImplemented from './NotImplemented';
 
 interface ToolRendererProps {
@@ -26,6 +30,10 @@ const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
     'base64-encoder': Base64Encoder,
     'password-generator': PasswordGenerator,
     'image-compressor': ImageCompressor,
+    'url-encoder': UrlEncoder,
+    'markdown-editor': MarkdownEditor,
+    'color-picker': ColorPicker,
+    'text-case-converter': TextCaseConverter,
     // Add more tool mappings here
   };
 
