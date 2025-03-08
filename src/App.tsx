@@ -12,6 +12,7 @@ import CategoryPage from "./pages/CategoryPage";
 import AllToolsPage from "./pages/AllToolsPage";
 import ToolPage from "./pages/ToolPage";
 import SuggestTool from "./pages/SuggestTool";
+import SupportPage from "./pages/SupportPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/all-tools" element={<AllToolsPage />} />
           <Route path="/tools/:toolId" element={<ToolPage />} />
           <Route path="/suggest-tool" element={<SuggestTool />} />
+          <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

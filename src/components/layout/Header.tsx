@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, Moon, Sun, LightbulbIcon, Grid3X3, ChevronDown } from 'lucide-react';
+import { Search, Menu, X, Moon, Sun, LightbulbIcon, Grid3X3, ChevronDown, LifeBuoy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -155,6 +155,19 @@ const Header: React.FC = () => {
                 <LightbulbIcon className="w-4 h-4" />
                 Suggest Tool
               </Link>
+              
+              <Link 
+                to="/support" 
+                className={cn(
+                  "px-3 py-2 rounded-md text-sm flex items-center gap-1 transition-colors",
+                  location.pathname === "/support" 
+                    ? "bg-primary/10 text-primary" 
+                    : "text-primary hover:bg-secondary/80"
+                )}
+              >
+                <LifeBuoy className="w-4 h-4" />
+                Support
+              </Link>
             </nav>
             
             <Button 
@@ -285,6 +298,19 @@ const Header: React.FC = () => {
               >
                 <LightbulbIcon className="w-4 h-4" />
                 Suggest Tool
+              </Link>
+              
+              <Link 
+                to="/support" 
+                className={cn(
+                  "px-3 py-2.5 rounded-md text-sm font-medium flex items-center gap-1 transition-colors",
+                  location.pathname === "/support" 
+                    ? "bg-primary/10 text-primary" 
+                    : "text-primary hover:bg-secondary/80"
+                )}
+              >
+                <LifeBuoy className="w-4 h-4" />
+                Support
               </Link>
             </nav>
           </div>
