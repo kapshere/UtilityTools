@@ -62,7 +62,7 @@ const ImageCompressor: React.FC = () => {
       setOriginalPreview(result);
       
       // Load image to get dimensions
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         setWidth(img.width);
         setHeight(img.height);
@@ -91,7 +91,7 @@ const ImageCompressor: React.FC = () => {
     setLoading(true);
     
     // Create a canvas element to resize and compress the image
-    const img = new Image();
+    const img = new window.Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');
       let targetWidth = width;
@@ -197,7 +197,7 @@ const ImageCompressor: React.FC = () => {
   const handleWidthChange = (value: number) => {
     setWidth(value);
     if (maintainRatio && originalImage) {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         const ratio = img.height / img.width;
         setHeight(Math.round(value * ratio));
@@ -209,7 +209,7 @@ const ImageCompressor: React.FC = () => {
   const handleHeightChange = (value: number) => {
     setHeight(value);
     if (maintainRatio && originalImage) {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         const ratio = img.width / img.height;
         setWidth(Math.round(value * ratio));
