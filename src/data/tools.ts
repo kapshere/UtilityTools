@@ -1,3 +1,4 @@
+
 import { 
   Calculator, Clock, Calendar, QrCode, Ruler, Compass, 
   FileText, FileImage, FileVideo, FileAudio, Map, Globe, 
@@ -9,7 +10,7 @@ import {
   Type, Quote, List, ListOrdered, Binary, BrainCircuit, 
   Cpu, Monitor, Scan, Search, FileJson, Fingerprint, 
   FileDiff, Regex, XCircle, Check, ChevronRight, Trophy,
-  FilePdf, Briefcase
+  File, Briefcase, TrendingUp
 } from "lucide-react";
 
 export type ToolType = {
@@ -71,7 +72,7 @@ export const categories: ToolCategoryType[] = [
     id: "pdf",
     name: "PDF Tools",
     description: "Tools for creating, editing and manipulating PDF files",
-    icon: FilePdf,
+    icon: File,
     color: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400"
   },
   {
@@ -539,7 +540,7 @@ export const tools: ToolType[] = [
     description: "Combine multiple PDF files into one document",
     category: categories.find(c => c.id === "pdf")!,
     path: "/tools/pdf-merger",
-    icon: FilePdf,
+    icon: File,
     featured: true,
     new: true
   },
