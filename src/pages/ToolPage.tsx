@@ -7,6 +7,7 @@ import { tools } from '@/data/tools';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import ToolRenderer from '@/components/tools/ToolRenderer';
 
 const ToolPage: React.FC = () => {
   const { toolId } = useParams<{ toolId: string }>();
@@ -96,14 +97,9 @@ const ToolPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Tool Interface Placeholder */}
+          {/* Tool Interface */}
           <div className="glass-panel rounded-lg p-8 mb-12 animate-scale-in">
-            <div className="text-center py-16">
-              <h3 className="text-xl font-medium mb-4">Tool Interface Coming Soon</h3>
-              <p className="text-muted-foreground">
-                This tool is under development and will be available soon.
-              </p>
-            </div>
+            <ToolRenderer toolId={tool.id} />
           </div>
           
           {/* Related Tools */}
