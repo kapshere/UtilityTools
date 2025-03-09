@@ -1,2 +1,95 @@
 
 /* This file is now used only for custom app-specific styles that aren't covered by Tailwind */
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .tool-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tool-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .tool-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tool-section {
+  padding: 3rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-section:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.1;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+}
+
+.tool-section-header {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tool-section-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.tool-section-title-icon {
+  margin-right: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+}
+
+.section-divider {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5));
+  border-radius: 3px;
+  margin: 2rem 0;
+}
+
+/* Enhanced animated background for sections */
+.bg-pattern {
+  background-color: rgba(243, 244, 246, 0.8);
+  background-image: radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .bg-pattern {
+  background-color: rgba(17, 24, 39, 0.8);
+  background-image: radial-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px);
+}

@@ -26,18 +26,18 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
     <Link 
       to={tool.path}
       className={cn(
-        "tool-card group animate-scale-in relative", 
+        "tool-card group animate-scale-in relative h-full", 
         className
       )}
     >
       <div className="p-6 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-5">
           <div className={cn(
-            "w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center",
+            "w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center",
             "bg-primary/10 text-primary dark:bg-primary/20 group-hover:bg-primary/20",
             "transition-all duration-300"
           )}>
-            <tool.icon className="w-6 h-6 sm:w-7 sm:h-7" />
+            <tool.icon className="w-8 h-8 sm:w-10 sm:h-10" />
           </div>
           <div className="flex items-center space-x-2">
             {tool.new && (
@@ -59,7 +59,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
           </div>
         </div>
         
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+        <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors">
           {tool.name}
         </h3>
         <p className="text-sm text-muted-foreground mb-4 flex-grow">

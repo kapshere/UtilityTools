@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -12,24 +12,64 @@ import { Button } from '@/components/ui/button';
 import { tools, categories } from '@/data/tools';
 import { 
   Search, Star, TrendingUp, Clock, Grid3X3, ChevronRight, 
-  FileText, Briefcase, LifeBuoy, MessageCircle, Phone, Mail, HelpCircle 
+  FileText, Briefcase, LifeBuoy, MessageCircle, Phone, Mail, HelpCircle,
+  FileImage, Type, Calculator, BrainCircuit, Wrench, Shield, Gamepad, 
+  Bot, Lock, Verified, Bot as BotIcon
 } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 const Index: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   
+  // Define tool collections
   const featuredTools = tools.filter(tool => tool.featured);
   const newTools = tools.filter(tool => tool.new);
+  
+  // Create tool collections for different categories
   const pdfTools = tools.filter(tool => 
-    tool.category.id === "files" && 
+    tool.category.id === "pdf" || 
     (tool.name.toLowerCase().includes("pdf") || tool.description.toLowerCase().includes("pdf"))
   );
-  const businessTools = tools.filter(tool => 
-    tool.category.id === "finance" || 
-    tool.category.id === "analytics" ||
-    tool.name.toLowerCase().includes("business") || 
-    tool.description.toLowerCase().includes("business")
+  
+  const imageTools = tools.filter(tool => 
+    tool.category.id === "files" && 
+    (tool.name.toLowerCase().includes("image") || tool.description.toLowerCase().includes("image"))
+  );
+  
+  const textTools = tools.filter(tool => 
+    tool.category.id === "text" || 
+    (tool.name.toLowerCase().includes("text") || tool.description.toLowerCase().includes("text"))
+  );
+  
+  const calculatorTools = tools.filter(tool => 
+    tool.category.id === "calculation" || 
+    (tool.name.toLowerCase().includes("calculator") || tool.description.toLowerCase().includes("calculator"))
+  );
+  
+  const aiTools = tools.filter(tool => 
+    (tool.name.toLowerCase().includes("ai") || tool.description.toLowerCase().includes("ai")) ||
+    (tool.name.toLowerCase().includes("generator") || tool.description.toLowerCase().includes("generator"))
+  );
+  
+  const utilityTools = tools.filter(tool => 
+    tool.category.id === "transforms" || 
+    tool.category.id === "encoding" ||
+    tool.category.id === "development"
+  );
+  
+  const securityTools = tools.filter(tool => 
+    tool.name.toLowerCase().includes("password") || 
+    tool.description.toLowerCase().includes("security") ||
+    tool.description.toLowerCase().includes("hash") ||
+    tool.name.toLowerCase().includes("hash")
+  );
+  
+  const gameTools = tools.filter(tool => 
+    tool.name.toLowerCase().includes("game") || 
+    tool.description.toLowerCase().includes("game") ||
+    tool.name.toLowerCase().includes("random") ||
+    tool.description.toLowerCase().includes("dice")
   );
 
   // Calculate tool count per category
@@ -44,6 +84,27 @@ const Index: React.FC = () => {
       navigate(`/all-tools?search=${encodeURIComponent(searchTerm)}`);
     }
   };
+
+  // Top tools by usage (simulated - in a real app, this would come from analytics)
+  const [topTools, setTopTools] = useState<typeof tools>([]);
+  
+  useEffect(() => {
+    // In a real app, this would be fetched from analytics
+    // Here we're just randomizing a subset of featured tools to simulate changes
+    const simulateTopTools = () => {
+      const shuffled = [...featuredTools].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 8);
+    };
+    
+    setTopTools(simulateTopTools());
+    
+    // Change top tools every 30 seconds for demonstration
+    const interval = setInterval(() => {
+      setTopTools(simulateTopTools());
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -94,32 +155,12 @@ const Index: React.FC = () => {
           <CategoryBar />
         </section>
         
-        {/* Featured Tools */}
-        <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-950/10 dark:to-indigo-950/10 rounded-xl my-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
-              <span className="bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 rounded-full p-1 mr-2">
-                <Star className="h-3 w-3 sm:h-4 sm:w-4" />
-              </span>
-              Featured Tools
-            </h2>
-            <Link 
-              to="/all-tools"
-              className="text-xs sm:text-sm text-primary hover:underline flex items-center"
-            >
-              View All
-              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
-            </Link>
-          </div>
-          <ToolsGrid tools={featuredTools} />
-        </section>
-        
         {/* New Tools */}
         <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-emerald-50/50 to-green-50/50 dark:from-emerald-950/10 dark:to-green-950/10 rounded-xl my-4">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-6">
             <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
-              <span className="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 rounded-full p-1 mr-2">
-                <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 rounded-full p-2 mr-3">
+                <Clock className="h-5 w-5 sm:h-6 sm:w-6" />
               </span>
               New Tools
             </h2>
@@ -131,92 +172,244 @@ const Index: React.FC = () => {
               <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
             </Link>
           </div>
-          <ToolsGrid tools={newTools} />
+          <ToolsGrid tools={newTools.length > 0 ? newTools.slice(0, 4) : tools.filter(tool => tool.category.id === "development").slice(0, 4)} />
         </section>
         
-        {/* PDF Tools */}
-        <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-red-50/50 to-orange-50/50 dark:from-red-950/10 dark:to-orange-950/10 rounded-xl my-4">
-          <div className="flex items-center justify-between mb-4">
+        {/* Featured Tools */}
+        <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-950/10 dark:to-indigo-950/10 rounded-xl my-4">
+          <div className="flex items-center justify-between mb-6">
             <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
-              <span className="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 rounded-full p-1 mr-2">
-                <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 rounded-full p-2 mr-3">
+                <Star className="h-5 w-5 sm:h-6 sm:w-6" />
               </span>
-              PDF Tools
+              Featured Tools
             </h2>
             <Link 
-              to="/all-tools?category=files"
+              to="/all-tools"
               className="text-xs sm:text-sm text-primary hover:underline flex items-center"
             >
               View All
               <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
             </Link>
           </div>
-          <ToolsGrid tools={pdfTools.length > 0 ? pdfTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
+          <ToolsGrid tools={topTools.length > 0 ? topTools : featuredTools.slice(0, 4)} />
         </section>
-        
-        {/* Business Tools */}
-        <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-950/10 dark:to-purple-950/10 rounded-xl my-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
-              <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 rounded-full p-1 mr-2">
-                <Briefcase className="h-3 w-3 sm:h-4 sm:w-4" />
-              </span>
-              Business Tools
-            </h2>
-            <Link 
-              to="/all-tools?category=finance"
-              className="text-xs sm:text-sm text-primary hover:underline flex items-center"
-            >
-              View All
-              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
-            </Link>
-          </div>
-          <ToolsGrid tools={businessTools.length > 0 ? businessTools : tools.filter(tool => tool.category.id === "finance").slice(0, 4)} />
-        </section>
-        
-        {/* All Categories */}
-        <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-950/10 dark:to-pink-950/10 rounded-xl my-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
-              <span className="bg-primary/10 text-primary rounded-full p-1 mr-2">
-                <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
-              </span>
-              All Categories
-            </h2>
-            <Link 
-              to="/categories"
-              className="text-xs sm:text-sm text-primary hover:underline flex items-center"
-            >
-              View All Categories
-              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {categoryToolCounts.slice(0, 6).map((category) => (
-              <CategoryCard 
-                key={category.id} 
-                category={category} 
-                toolCount={category.toolCount}
-              />
-            ))}
-          </div>
-          {categoryToolCounts.length > 6 && (
-            <div className="text-center mt-6 sm:mt-8">
-              <Button asChild>
-                <Link to="/categories">
-                  <Grid3X3 className="w-4 h-4 mr-2" />
-                  View All Categories
-                </Link>
-              </Button>
-            </div>
-          )}
+
+        {/* Tools By Category Tabbed Interface */}
+        <section className="py-8 container mx-auto px-4 my-6 bg-pattern rounded-xl">
+          <h2 className="text-2xl font-bold mb-8 text-center">
+            <span className="gradient-text">Explore Our Tools Collection</span>
+          </h2>
+          
+          <Tabs defaultValue="all" className="w-full">
+            <TabsList className="w-full flex flex-wrap justify-center mb-8 bg-transparent">
+              <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white">
+                <Grid3X3 className="w-4 h-4 mr-2" />
+                All Tools
+              </TabsTrigger>
+              <TabsTrigger value="pdf" className="m-1 data-[state=active]:bg-red-500 data-[state=active]:text-white">
+                <FileText className="w-4 h-4 mr-2" />
+                PDF Tools
+              </TabsTrigger>
+              <TabsTrigger value="image" className="m-1 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                <FileImage className="w-4 h-4 mr-2" />
+                Image Tools
+              </TabsTrigger>
+              <TabsTrigger value="text" className="m-1 data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+                <Type className="w-4 h-4 mr-2" />
+                Text Tools
+              </TabsTrigger>
+              <TabsTrigger value="calculators" className="m-1 data-[state=active]:bg-amber-500 data-[state=active]:text-white">
+                <Calculator className="w-4 h-4 mr-2" />
+                Calculators
+              </TabsTrigger>
+              <TabsTrigger value="ai" className="m-1 data-[state=active]:bg-emerald-500 data-[state=active]:text-white">
+                <BotIcon className="w-4 h-4 mr-2" />
+                AI Tools
+              </TabsTrigger>
+              <TabsTrigger value="utility" className="m-1 data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+                <Wrench className="w-4 h-4 mr-2" />
+                Utility Tools
+              </TabsTrigger>
+              <TabsTrigger value="security" className="m-1 data-[state=active]:bg-gray-500 data-[state=active]:text-white">
+                <Lock className="w-4 h-4 mr-2" />
+                Security Tools
+              </TabsTrigger>
+              <TabsTrigger value="games" className="m-1 data-[state=active]:bg-pink-500 data-[state=active]:text-white">
+                <Gamepad className="w-4 h-4 mr-2" />
+                Game Tools
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="all" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Grid3X3 className="mr-2 h-5 w-5 text-primary" />
+                  All Tools
+                </h3>
+                <ToolsGrid tools={tools.slice(0, 8)} />
+                <div className="text-center mt-6">
+                  <Button asChild>
+                    <Link to="/all-tools">
+                      <Grid3X3 className="mr-2 h-4 w-4" />
+                      View All Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="pdf" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <FileText className="mr-2 h-5 w-5 text-red-500" />
+                  PDF Tools
+                </h3>
+                <ToolsGrid tools={pdfTools.length > 0 ? pdfTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-red-50 hover:bg-red-100 text-red-600 border-red-200">
+                    <Link to="/all-tools?category=pdf">
+                      <FileText className="mr-2 h-4 w-4" />
+                      View All PDF Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="image" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <FileImage className="mr-2 h-5 w-5 text-blue-500" />
+                  Image Tools
+                </h3>
+                <ToolsGrid tools={imageTools.length > 0 ? imageTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-blue-50 hover:bg-blue-100 text-blue-600 border-blue-200">
+                    <Link to="/all-tools?category=files">
+                      <FileImage className="mr-2 h-4 w-4" />
+                      View All Image Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="text" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Type className="mr-2 h-5 w-5 text-purple-500" />
+                  Text Tools
+                </h3>
+                <ToolsGrid tools={textTools.length > 0 ? textTools : tools.filter(tool => tool.category.id === "text").slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-purple-50 hover:bg-purple-100 text-purple-600 border-purple-200">
+                    <Link to="/all-tools?category=text">
+                      <Type className="mr-2 h-4 w-4" />
+                      View All Text Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="calculators" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Calculator className="mr-2 h-5 w-5 text-amber-500" />
+                  Calculators
+                </h3>
+                <ToolsGrid tools={calculatorTools.length > 0 ? calculatorTools : tools.filter(tool => tool.category.id === "calculation").slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-amber-50 hover:bg-amber-100 text-amber-600 border-amber-200">
+                    <Link to="/all-tools?category=calculation">
+                      <Calculator className="mr-2 h-4 w-4" />
+                      View All Calculators
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="ai" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <BrainCircuit className="mr-2 h-5 w-5 text-emerald-500" />
+                  AI Tools
+                </h3>
+                <ToolsGrid tools={aiTools.length > 0 ? aiTools : tools.filter(tool => tool.name.toLowerCase().includes("generator")).slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200">
+                    <Link to="/all-tools?search=ai">
+                      <BrainCircuit className="mr-2 h-4 w-4" />
+                      View All AI Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="utility" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Wrench className="mr-2 h-5 w-5 text-cyan-500" />
+                  Utility Tools
+                </h3>
+                <ToolsGrid tools={utilityTools.length > 0 ? utilityTools.slice(0, 8) : tools.filter(tool => tool.category.id === "transforms").slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-cyan-50 hover:bg-cyan-100 text-cyan-600 border-cyan-200">
+                    <Link to="/all-tools?category=transforms">
+                      <Wrench className="mr-2 h-4 w-4" />
+                      View All Utility Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="security" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Shield className="mr-2 h-5 w-5 text-gray-700" />
+                  Security Tools
+                </h3>
+                <ToolsGrid tools={securityTools.length > 0 ? securityTools : tools.filter(tool => tool.name.toLowerCase().includes("password")).slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200">
+                    <Link to="/all-tools?search=security">
+                      <Shield className="mr-2 h-4 w-4" />
+                      View All Security Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="games" className="mt-6 focus-visible:outline-none">
+              <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <Gamepad className="mr-2 h-5 w-5 text-pink-500" />
+                  Game Tools
+                </h3>
+                <ToolsGrid tools={gameTools.length > 0 ? gameTools : tools.filter(tool => tool.name.toLowerCase().includes("random")).slice(0, 4)} />
+                <div className="text-center mt-6">
+                  <Button asChild variant="outline" className="bg-pink-50 hover:bg-pink-100 text-pink-600 border-pink-200">
+                    <Link to="/all-tools?search=game">
+                      <Gamepad className="mr-2 h-4 w-4" />
+                      View All Game Tools
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </section>
         
         {/* All Tools CTA */}
         <section className="py-6 sm:py-8 container mx-auto px-4">
-          <div className="glass-card p-4 sm:p-8 rounded-lg text-center shadow-md transform hover:shadow-lg transition-all duration-300">
-            <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Explore Our Complete Collection</h2>
-            <p className="text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
+          <div className="glass-card p-8 sm:p-10 rounded-xl text-center shadow-md transform hover:shadow-lg transition-all duration-300">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Explore Our Complete Collection</h2>
+            <p className="text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base">
               Browse our full library of {tools.length} productivity tools to find exactly what you need.
             </p>
             <Button asChild size="lg" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700">
