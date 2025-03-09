@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import type { ToolType } from '@/data/tools';
 import { Badge } from '@/components/ui/badge';
 import { Heart } from 'lucide-react';
-import { useWishlist } from '@/hooks/use-wishlist';
+import { useFavorites } from '@/hooks/use-favorites';
 
 interface ToolCardProps {
   tool: ToolType;
@@ -13,13 +13,13 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
-  const { isInWishlist, toggleWishlist } = useWishlist();
-  const inWishlist = isInWishlist(tool.id);
+  const { isInFavorites, toggleFavorite } = useFavorites();
+  const inFavorites = isInFavorites(tool.id);
 
-  const handleWishlistClick = (e: React.MouseEvent) => {
+  const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleWishlist(tool.id, tool.name);
+    toggleFavorite(tool.id, tool.name);
   };
 
   return (
@@ -86,13 +86,14 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
           </div>
           
           <button 
-            onClick={handleWishlistClick}
+            onClick={handleFavoriteClick}
             className="rounded-full p-2 hover:bg-secondary transition-colors"
+            aria-label={inFavorites ? "Remove from favorites" : "Add to favorites"}
           >
             <Heart 
               className={cn(
                 "w-5 h-5 transition-colors",
-                inWishlist ? "fill-red-500 text-red-500" : "text-muted-foreground"
+                inFavorites ? "fill-red-500 text-red-500" : "text-muted-foreground"
               )} 
             />
           </button>

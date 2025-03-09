@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, Menu, X, Moon, Sun, LightbulbIcon, Grid3X3, ChevronDown, LifeBuoy, Heart } from 'lucide-react';
@@ -9,8 +10,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { useWishlist } from '@/hooks/use-wishlist';
+import { useFavorites } from '@/hooks/use-favorites';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,8 +22,8 @@ const Header: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { wishlist } = useWishlist();
-  const hasWishlistItems = wishlist.length > 0;
+  const { favorites } = useFavorites();
+  const hasFavoriteItems = favorites.length > 0;
 
   useEffect(() => {
     const checkScroll = () => {
@@ -110,48 +113,88 @@ const Header: React.FC = () => {
                     <ChevronDown className="w-4 h-4 ml-1" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link to="/all-tools">
-                      <Grid3X3 className="w-4 h-4 mr-2" />
-                      All Tools
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/categories">
-                      <span className="w-4 h-4 mr-2">🗂️</span>
-                      Categories
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/popular">
-                      <span className="w-4 h-4 mr-2">🔥</span>
-                      Popular Tools
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/new">
-                      <span className="w-4 h-4 mr-2">✨</span>
-                      New Tools
-                    </Link>
-                  </DropdownMenuItem>
+                <DropdownMenuContent align="end" className="w-60">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link to="/all-tools">
+                        <Grid3X3 className="w-4 h-4 mr-2" />
+                        All Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/pdf">
+                        <span className="w-4 h-4 mr-2 text-red-500">📄</span>
+                        PDF Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/image">
+                        <span className="w-4 h-4 mr-2 text-blue-500">🖼️</span>
+                        Image Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/text">
+                        <span className="w-4 h-4 mr-2 text-purple-500">📝</span>
+                        Text Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/calculators">
+                        <span className="w-4 h-4 mr-2 text-amber-500">🧮</span>
+                        Calculators
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/ai">
+                        <span className="w-4 h-4 mr-2 text-emerald-500">🤖</span>
+                        AI Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/utility">
+                        <span className="w-4 h-4 mr-2 text-cyan-500">🔧</span>
+                        Utility Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/security">
+                        <span className="w-4 h-4 mr-2 text-gray-700">🔒</span>
+                        Security Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/tool-category/games">
+                        <span className="w-4 h-4 mr-2 text-pink-500">🎮</span>
+                        Game Tools
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/categories">
+                        <span className="w-4 h-4 mr-2">🗂️</span>
+                        Categories
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
               
               <Link 
-                to="/wishlist" 
+                to="/favorites" 
                 className={cn(
                   "px-3 py-2 rounded-md text-sm flex items-center gap-1 transition-colors relative",
-                  location.pathname === "/wishlist" 
+                  location.pathname === "/favorites" 
                     ? "bg-primary/10 text-primary" 
                     : "text-primary hover:bg-secondary/80"
                 )}
               >
-                <Heart className={cn("w-4 h-4", hasWishlistItems && "fill-red-500 text-red-500")} />
-                Wishlist
-                {hasWishlistItems && (
+                <Heart className={cn("w-4 h-4", hasFavoriteItems && "fill-red-500 text-red-500")} />
+                Favorites
+                {hasFavoriteItems && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                    {wishlist.length}
+                    {favorites.length}
                   </span>
                 )}
               </Link>
@@ -195,21 +238,21 @@ const Header: React.FC = () => {
 
           <div className="flex md:hidden">
             <Link 
-              to="/wishlist" 
+              to="/favorites" 
               className="relative mr-2"
             >
               <Button 
                 variant="ghost" 
                 size="icon"
                 className={cn(
-                  location.pathname === "/wishlist" && "bg-primary/10"
+                  location.pathname === "/favorites" && "bg-primary/10"
                 )}
               >
-                <Heart className={cn("h-5 w-5", hasWishlistItems && "fill-red-500 text-red-500")} />
+                <Heart className={cn("h-5 w-5", hasFavoriteItems && "fill-red-500 text-red-500")} />
               </Button>
-              {hasWishlistItems && (
+              {hasFavoriteItems && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  {wishlist.length}
+                  {favorites.length}
                 </span>
               )}
             </Link>
@@ -282,61 +325,90 @@ const Header: React.FC = () => {
                 All Tools
               </Link>
               
+              <div className="px-3 py-2 text-sm font-medium text-foreground">Tool Categories</div>
+              
               <Link 
-                to="/categories" 
-                className={cn(
-                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
-                  location.pathname === "/categories" 
-                    ? "bg-primary/10 text-primary" 
-                    : "hover:bg-secondary/80"
-                )}
+                to="/tool-category/pdf" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
               >
-                <span className="w-4 h-4 mr-2">🗂️</span>
-                Categories
+                <span className="w-4 h-4 mr-2 text-red-500">📄</span>
+                PDF Tools
               </Link>
               
               <Link 
-                to="/wishlist" 
+                to="/tool-category/image" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-blue-500">🖼️</span>
+                Image Tools
+              </Link>
+              
+              <Link 
+                to="/tool-category/text" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-purple-500">📝</span>
+                Text Tools
+              </Link>
+              
+              <Link 
+                to="/tool-category/calculators" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-amber-500">🧮</span>
+                Calculators
+              </Link>
+              
+              <Link 
+                to="/tool-category/ai" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-emerald-500">🤖</span>
+                AI Tools
+              </Link>
+              
+              <Link 
+                to="/tool-category/utility" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-cyan-500">🔧</span>
+                Utility Tools
+              </Link>
+              
+              <Link 
+                to="/tool-category/security" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-gray-700">🔒</span>
+                Security Tools
+              </Link>
+              
+              <Link 
+                to="/tool-category/games" 
+                className="pl-6 py-2 text-sm flex items-center text-muted-foreground hover:text-foreground"
+              >
+                <span className="w-4 h-4 mr-2 text-pink-500">🎮</span>
+                Game Tools
+              </Link>
+              
+              <div className="border-t my-2"></div>
+              
+              <Link 
+                to="/favorites" 
                 className={cn(
                   "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
-                  location.pathname === "/wishlist" 
+                  location.pathname === "/favorites" 
                     ? "bg-primary/10 text-primary" 
                     : "hover:bg-secondary/80"
                 )}
               >
-                <Heart className={cn("w-4 h-4 mr-2", hasWishlistItems && "fill-red-500 text-red-500")} />
-                Wishlist
-                {hasWishlistItems && (
+                <Heart className={cn("w-4 h-4 mr-2", hasFavoriteItems && "fill-red-500 text-red-500")} />
+                Favorites
+                {hasFavoriteItems && (
                   <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                    {wishlist.length}
+                    {favorites.length}
                   </span>
                 )}
-              </Link>
-              
-              <Link 
-                to="/popular" 
-                className={cn(
-                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
-                  location.pathname === "/popular" 
-                    ? "bg-primary/10 text-primary" 
-                    : "hover:bg-secondary/80"
-                )}
-              >
-                <span className="w-4 h-4 mr-2">🔥</span>
-                Popular Tools
-              </Link>
-              
-              <Link 
-                to="/new" 
-                className={cn(
-                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
-                  location.pathname === "/new" 
-                    ? "bg-primary/10 text-primary" 
-                    : "hover:bg-secondary/80"
-                )}
-              >
-                <span className="w-4 h-4 mr-2">✨</span>
-                New Tools
               </Link>
               
               <Link 

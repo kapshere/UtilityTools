@@ -165,7 +165,7 @@ const Index: React.FC = () => {
               New Tools
             </h2>
             <Link 
-              to="/new"
+              to="/all-tools?filter=new"
               className="text-xs sm:text-sm text-primary hover:underline flex items-center"
             >
               View All
@@ -185,7 +185,7 @@ const Index: React.FC = () => {
               Featured Tools
             </h2>
             <Link 
-              to="/all-tools"
+              to="/all-tools?filter=featured"
               className="text-xs sm:text-sm text-primary hover:underline flex items-center"
             >
               View All
@@ -268,7 +268,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={pdfTools.length > 0 ? pdfTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-red-50 hover:bg-red-100 text-red-600 border-red-200">
-                    <Link to="/all-tools?category=pdf">
+                    <Link to="/tool-category/pdf">
                       <FileText className="mr-2 h-4 w-4" />
                       View All PDF Tools
                     </Link>
@@ -286,7 +286,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={imageTools.length > 0 ? imageTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-blue-50 hover:bg-blue-100 text-blue-600 border-blue-200">
-                    <Link to="/all-tools?category=files">
+                    <Link to="/tool-category/image">
                       <FileImage className="mr-2 h-4 w-4" />
                       View All Image Tools
                     </Link>
@@ -304,7 +304,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={textTools.length > 0 ? textTools : tools.filter(tool => tool.category.id === "text").slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-purple-50 hover:bg-purple-100 text-purple-600 border-purple-200">
-                    <Link to="/all-tools?category=text">
+                    <Link to="/tool-category/text">
                       <Type className="mr-2 h-4 w-4" />
                       View All Text Tools
                     </Link>
@@ -322,7 +322,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={calculatorTools.length > 0 ? calculatorTools : tools.filter(tool => tool.category.id === "calculation").slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-amber-50 hover:bg-amber-100 text-amber-600 border-amber-200">
-                    <Link to="/all-tools?category=calculation">
+                    <Link to="/tool-category/calculators">
                       <Calculator className="mr-2 h-4 w-4" />
                       View All Calculators
                     </Link>
@@ -340,7 +340,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={aiTools.length > 0 ? aiTools : tools.filter(tool => tool.name.toLowerCase().includes("generator")).slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200">
-                    <Link to="/all-tools?search=ai">
+                    <Link to="/tool-category/ai">
                       <BrainCircuit className="mr-2 h-4 w-4" />
                       View All AI Tools
                     </Link>
@@ -358,7 +358,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={utilityTools.length > 0 ? utilityTools.slice(0, 8) : tools.filter(tool => tool.category.id === "transforms").slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-cyan-50 hover:bg-cyan-100 text-cyan-600 border-cyan-200">
-                    <Link to="/all-tools?category=transforms">
+                    <Link to="/tool-category/utility">
                       <Wrench className="mr-2 h-4 w-4" />
                       View All Utility Tools
                     </Link>
@@ -376,7 +376,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={securityTools.length > 0 ? securityTools : tools.filter(tool => tool.name.toLowerCase().includes("password")).slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200">
-                    <Link to="/all-tools?search=security">
+                    <Link to="/tool-category/security">
                       <Shield className="mr-2 h-4 w-4" />
                       View All Security Tools
                     </Link>
@@ -394,7 +394,7 @@ const Index: React.FC = () => {
                 <ToolsGrid tools={gameTools.length > 0 ? gameTools : tools.filter(tool => tool.name.toLowerCase().includes("random")).slice(0, 4)} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-pink-50 hover:bg-pink-100 text-pink-600 border-pink-200">
-                    <Link to="/all-tools?search=game">
+                    <Link to="/tool-category/games">
                       <Gamepad className="mr-2 h-4 w-4" />
                       View All Game Tools
                     </Link>
