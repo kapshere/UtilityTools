@@ -74,7 +74,7 @@ const HeroCarousel: React.FC = () => {
   }, [currentSlide]);
   
   return (
-    <div className="relative overflow-hidden h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
+    <div className="relative overflow-hidden h-[350px] xs:h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
       {slides.map((slide, index) => {
         const Icon = slide.icon;
         
@@ -125,25 +125,25 @@ const HeroCarousel: React.FC = () => {
             <div className="relative z-20 text-center max-w-4xl mx-auto animate-fade-in px-4">
               <div className="flex justify-center mb-4 sm:mb-6">
                 <div className={cn(
-                  "w-14 h-14 sm:w-18 sm:h-18 md:w-24 md:h-24 rounded-full flex items-center justify-center",
+                  "w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center",
                   "bg-white/10 backdrop-blur-sm text-white shadow-xl",
                   "border border-white/20"
                 )}>
-                  <Icon className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12" />
+                  <Icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2 sm:mb-4 text-white drop-shadow-md">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-2 sm:mb-4 text-white drop-shadow-md">
                 {slide.title}
               </h1>
-              <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow">
+              <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 mb-4 xs:mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow">
                 {slide.subtitle}
               </p>
               
               <Button 
                 asChild 
                 size="lg" 
-                className="rounded-full px-6 sm:px-8 py-2 sm:py-3 transition-transform hover:scale-105 bg-white/90 hover:bg-white text-gray-900 font-medium shadow-lg border border-white/20"
+                className="rounded-full px-4 xs:px-6 sm:px-8 py-1 xs:py-2 sm:py-3 transition-transform hover:scale-105 bg-white/90 hover:bg-white text-gray-900 font-medium shadow-lg border border-white/20"
               >
                 <Link to={slide.buttonLink}>
                   {slide.buttonText}
@@ -158,19 +158,19 @@ const HeroCarousel: React.FC = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white w-10 h-10 sm:w-12 sm:h-12 shadow-lg border border-white/20"
+        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 shadow-lg border border-white/20"
         onClick={prevSlide}
       >
-        <ChevronLeft className="h-5 w-5 sm:h-7 sm:w-7" />
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
       </Button>
       
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white w-10 h-10 sm:w-12 sm:h-12 shadow-lg border border-white/20"
+        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-30 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 shadow-lg border border-white/20"
         onClick={nextSlide}
       >
-        <ChevronRight className="h-5 w-5 sm:h-7 sm:w-7" />
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
       </Button>
       
       {/* Indicators */}
@@ -179,9 +179,9 @@ const HeroCarousel: React.FC = () => {
           <button
             key={index}
             className={cn(
-              "w-2.5 h-2.5 rounded-full transition-all duration-300",
+              "w-2 h-2 xs:w-2.5 xs:h-2.5 rounded-full transition-all duration-300",
               currentSlide === index 
-                ? "bg-white w-6 sm:w-8" 
+                ? "bg-white w-4 xs:w-6 sm:w-8" 
                 : "bg-white/50 hover:bg-white/70"
             )}
             onClick={() => setCurrentSlide(index)}

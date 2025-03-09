@@ -60,30 +60,39 @@ const CategoryPage: React.FC = () => {
           
           {/* Category Header */}
           <div className="mb-12 animate-slide-up">
-            <div className="flex items-center mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
               <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mr-4",
+                "w-16 h-16 rounded-full flex items-center justify-center",
                 category.color
               )}>
-                <category.icon className="w-6 h-6" />
+                <category.icon className="w-8 h-8" />
               </div>
               
-              <h1 className="text-3xl font-bold">{category.name} Tools</h1>
+              <div>
+                <h1 className="text-3xl font-bold">{category.name} Tools</h1>
+                <p className="text-lg text-muted-foreground max-w-2xl mt-2">
+                  {category.description}
+                </p>
+              </div>
             </div>
             
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              {category.description}
-            </p>
+            <div className="h-1 w-full bg-gradient-to-r from-primary/50 to-transparent rounded-full"></div>
           </div>
           
           {/* Tools Grid */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-6">
+            <h2 className="text-xl font-semibold mb-6 flex items-center">
+              <span className={cn(
+                "w-8 h-8 rounded-full flex items-center justify-center mr-2",
+                "bg-primary/10 text-primary"
+              )}>
+                <category.icon className="w-4 h-4" />
+              </span>
               All {category.name} Tools ({categoryTools.length})
             </h2>
             
             {categoryTools.length > 0 ? (
-              <ToolsGrid tools={categoryTools} />
+              <ToolsGrid tools={categoryTools} className="animate-fade-in" />
             ) : (
               <div className="glass-card p-8 text-center">
                 <p className="text-muted-foreground">

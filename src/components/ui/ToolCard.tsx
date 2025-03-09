@@ -33,11 +33,11 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
           <div className={cn(
-            "w-10 h-10 rounded-full flex items-center justify-center",
+            "w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center",
             "bg-primary/10 text-primary dark:bg-primary/20 group-hover:bg-primary/20",
             "transition-all duration-300"
           )}>
-            <tool.icon className="w-5 h-5" />
+            <tool.icon className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
           <div className="flex items-center space-x-2">
             {tool.new && (
@@ -87,11 +87,11 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, className }) => {
           
           <button 
             onClick={handleWishlistClick}
-            className="rounded-full p-1.5 hover:bg-secondary transition-colors"
+            className="rounded-full p-2 hover:bg-secondary transition-colors"
           >
             <Heart 
               className={cn(
-                "w-4 h-4 transition-colors",
+                "w-5 h-5 transition-colors",
                 inWishlist ? "fill-red-500 text-red-500" : "text-muted-foreground"
               )} 
             />

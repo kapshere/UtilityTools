@@ -97,18 +97,6 @@ const Header: React.FC = () => {
                 Home
               </Link>
               
-              <Link 
-                to="/categories" 
-                className={cn(
-                  "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  location.pathname === "/categories" 
-                    ? "bg-primary/10 text-primary" 
-                    : "hover:bg-secondary/80 hover:text-primary"
-                )}
-              >
-                Categories
-              </Link>
-              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button 
@@ -127,6 +115,12 @@ const Header: React.FC = () => {
                     <Link to="/all-tools">
                       <Grid3X3 className="w-4 h-4 mr-2" />
                       All Tools
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/categories">
+                      <span className="w-4 h-4 mr-2">🗂️</span>
+                      Categories
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -276,18 +270,6 @@ const Header: React.FC = () => {
               </Link>
               
               <Link 
-                to="/categories" 
-                className={cn(
-                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
-                  location.pathname === "/categories" 
-                    ? "bg-primary/10 text-primary" 
-                    : "hover:bg-secondary/80"
-                )}
-              >
-                Categories
-              </Link>
-              
-              <Link 
                 to="/all-tools" 
                 className={cn(
                   "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
@@ -298,6 +280,19 @@ const Header: React.FC = () => {
               >
                 <Grid3X3 className="w-4 h-4 mr-2" />
                 All Tools
+              </Link>
+              
+              <Link 
+                to="/categories" 
+                className={cn(
+                  "px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center",
+                  location.pathname === "/categories" 
+                    ? "bg-primary/10 text-primary" 
+                    : "hover:bg-secondary/80"
+                )}
+              >
+                <span className="w-4 h-4 mr-2">🗂️</span>
+                Categories
               </Link>
               
               <Link 
