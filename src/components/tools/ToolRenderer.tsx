@@ -18,6 +18,7 @@ import HashGenerator from './HashGenerator';
 import CharacterCounter from './CharacterCounter';
 import PercentageCalculator from './PercentageCalculator';
 import NotImplemented from './NotImplemented';
+import { useToast } from '@/components/ui/use-toast';
 
 interface ToolRendererProps {
   toolId: string;
@@ -25,6 +26,8 @@ interface ToolRendererProps {
 
 // This component renders the appropriate tool based on the tool ID
 const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
+  const { toast } = useToast();
+  
   // Map of tool IDs to their corresponding components
   const toolComponents: Record<string, React.ComponentType> = {
     'calculator': Calculator,
@@ -47,9 +50,28 @@ const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
   };
 
   // Get the component for the specified tool ID
-  const ToolComponent = toolComponents[toolId] || NotImplemented;
+  const ToolComponent = toolComponents[toolId];
   
-  return <ToolComponent />;
+  // If the tool doesn't exist, show a toast and render the NotImplemented component
+  React.useEffect(() => {
+    if (!ToolComponent && toolId) {
+      toast({
+        title: "Tool in development",
+        description: "This tool is currently under development and will be available soon.",
+        variant: "default",
+      });
+    }
+  }, [toolId, toast]);
+  
+  if (!ToolComponent) {
+    return <NotImplemented />;
+  }
+  
+  return (
+    <div className="tool-renderer-container">
+      <ToolComponent />
+    </div>
+  );
 };
 
 export default ToolRenderer;

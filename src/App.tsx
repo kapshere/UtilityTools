@@ -17,7 +17,17 @@ import SuggestTool from "./pages/SuggestTool";
 import SupportPage from "./pages/SupportPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Import CSS
+import "./App.css";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,18 +35,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/:categoryId" element={<CategoryPage />} />
-          <Route path="/all-tools" element={<AllToolsPage />} />
-          <Route path="/tools/:toolId" element={<ToolPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/tool-category/:categoryId" element={<ToolCategoryPage />} />
-          <Route path="/suggest-tool" element={<SuggestTool />} />
-          <Route path="/support" element={<SupportPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="min-h-screen flex flex-col">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/categories/:categoryId" element={<CategoryPage />} />
+            <Route path="/all-tools" element={<AllToolsPage />} />
+            <Route path="/tools/:toolId" element={<ToolPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/tool-category/:categoryId" element={<ToolCategoryPage />} />
+            <Route path="/suggest-tool" element={<SuggestTool />} />
+            <Route path="/support" element={<SupportPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

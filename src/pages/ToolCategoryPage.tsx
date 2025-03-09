@@ -113,7 +113,7 @@ const ToolCategoryPage: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow pt-24 pb-10">
+      <main className="flex-grow pt-16 md:pt-24 pb-6 md:pb-10">
         <div className="container mx-auto px-4">
           <div className="flex items-center mb-2">
             <Button 
@@ -127,8 +127,8 @@ const ToolCategoryPage: React.FC = () => {
             </Button>
           </div>
           
-          <div className="mb-8">
-            <h1 className={`text-3xl font-bold mb-2 ${categoryConfig.iconColor}`}>
+          <div className="mb-6 md:mb-8">
+            <h1 className={`text-2xl md:text-3xl font-bold mb-2 ${categoryConfig.iconColor}`}>
               {categoryConfig.title}
             </h1>
             <p className="text-muted-foreground">
@@ -139,7 +139,7 @@ const ToolCategoryPage: React.FC = () => {
           {filteredTools.length > 0 ? (
             <ToolsGrid tools={filteredTools} columns={3} />
           ) : (
-            <div className="text-center py-12">
+            <div className="text-center py-8 md:py-12">
               <p className="text-muted-foreground">No tools found in this category.</p>
             </div>
           )}

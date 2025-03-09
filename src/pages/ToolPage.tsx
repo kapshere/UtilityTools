@@ -8,12 +8,12 @@ import { ChevronRight, ArrowLeft, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ToolRenderer from '@/components/tools/ToolRenderer';
-import { useWishlist } from '@/hooks/use-wishlist';
+import { useFavorites } from '@/hooks/use-favorites';
 
 const ToolPage: React.FC = () => {
   const { toolId } = useParams<{ toolId: string }>();
   const navigate = useNavigate();
-  const { isInWishlist, toggleWishlist } = useWishlist();
+  const { isInFavorites, toggleFavorite } = useFavorites();
   
   const tool = tools.find(t => t.id === toolId);
   
@@ -44,10 +44,10 @@ const ToolPage: React.FC = () => {
     );
   }
 
-  const inWishlist = isInWishlist(tool.id);
+  const inFavorites = isInFavorites(tool.id);
 
-  const handleWishlistToggle = () => {
-    toggleWishlist(tool.id, tool.name);
+  const handleFavoritesToggle = () => {
+    toggleFavorite(tool.id, tool.name);
   };
 
   const handleShare = () => {
@@ -97,17 +97,17 @@ const ToolPage: React.FC = () => {
           
           {/* Tool Header */}
           <div className="mb-8 animate-slide-up">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center">
                 <div className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center mr-4",
+                  "w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mr-4",
                   "bg-primary/10 text-primary dark:bg-primary/20"
                 )}>
-                  <tool.icon className="w-6 h-6" />
+                  <tool.icon className="w-6 h-6 sm:w-8 sm:h-8" />
                 </div>
                 
                 <div>
-                  <h1 className="text-3xl font-bold">{tool.name}</h1>
+                  <h1 className="text-2xl sm:text-3xl font-bold">{tool.name}</h1>
                   <span className={cn(
                     "category-chip mt-1",
                     tool.category.color
@@ -117,20 +117,20 @@ const ToolPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-2 md:mt-0">
                 <Button 
                   variant="outline" 
                   size="icon"
-                  onClick={handleWishlistToggle}
+                  onClick={handleFavoritesToggle}
                   className={cn(
                     "rounded-full transition-colors",
-                    inWishlist && "bg-primary/5"
+                    inFavorites && "bg-primary/5"
                   )}
                 >
                   <Heart 
                     className={cn(
                       "h-5 w-5",
-                      inWishlist ? "fill-red-500 text-red-500" : ""
+                      inFavorites ? "fill-red-500 text-red-500" : ""
                     )} 
                   />
                 </Button>
@@ -151,7 +151,7 @@ const ToolPage: React.FC = () => {
           </div>
           
           {/* Tool Interface */}
-          <div className="glass-panel rounded-lg p-8 mb-12 animate-scale-in">
+          <div className="glass-panel rounded-lg p-4 sm:p-8 mb-12 animate-scale-in">
             <ToolRenderer toolId={tool.id} />
           </div>
           
@@ -159,7 +159,7 @@ const ToolPage: React.FC = () => {
           {relatedTools.length > 0 && (
             <div className="mb-8 animate-slide-up">
               <h2 className="text-xl font-semibold mb-6">Related Tools</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {relatedTools.map(relatedTool => (
                   <Link 
                     key={relatedTool.id} 
@@ -168,8 +168,8 @@ const ToolPage: React.FC = () => {
                   >
                     <div className="p-6">
                       <div className="flex items-center mb-3">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-3">
-                          <relatedTool.icon className="w-4 h-4" />
+                        <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-3">
+                          <relatedTool.icon className="w-5 h-5" />
                         </div>
                         <h3 className="font-medium">{relatedTool.name}</h3>
                       </div>
