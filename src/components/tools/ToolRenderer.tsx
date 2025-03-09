@@ -19,6 +19,7 @@ import CharacterCounter from './CharacterCounter';
 import PercentageCalculator from './PercentageCalculator';
 import NotImplemented from './NotImplemented';
 import { useToast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
 
 interface ToolRendererProps {
   toolId: string;
@@ -68,7 +69,11 @@ const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
   }
   
   return (
-    <div className="tool-renderer-container">
+    <div className={cn(
+      "tool-renderer-container p-4 md:p-6", 
+      "rounded-lg transition-all",
+      "dark:bg-gray-900/30 dark:backdrop-blur-sm"
+    )}>
       <ToolComponent />
     </div>
   );

@@ -73,7 +73,7 @@ const ToolPage: React.FC = () => {
       <main className="flex-grow pt-24 pb-10">
         <div className="container mx-auto px-4">
           {/* Breadcrumbs */}
-          <div className="flex items-center text-sm text-muted-foreground mb-6 animate-fade-in">
+          <div className="flex items-center text-sm text-muted-foreground mb-4 animate-fade-in">
             <Link to="/" className="hover:text-primary">
               Home
             </Link>
@@ -95,7 +95,12 @@ const ToolPage: React.FC = () => {
             Back
           </Button>
           
-          {/* Tool Header */}
+          {/* Tool Interface - Moved to top */}
+          <div className="glass-panel rounded-lg p-4 sm:p-8 mb-8 animate-scale-in shadow-hard dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] dark:bg-gray-900/60">
+            <ToolRenderer toolId={tool.id} />
+          </div>
+          
+          {/* Tool Header - Moved below tool interface */}
           <div className="mb-8 animate-slide-up">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center">
@@ -124,7 +129,7 @@ const ToolPage: React.FC = () => {
                   onClick={handleFavoritesToggle}
                   className={cn(
                     "rounded-full transition-colors",
-                    inFavorites && "bg-primary/5"
+                    inFavorites && "bg-primary/5 dark:bg-primary/20"
                   )}
                 >
                   <Heart 
@@ -150,11 +155,6 @@ const ToolPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Tool Interface */}
-          <div className="glass-panel rounded-lg p-4 sm:p-8 mb-12 animate-scale-in">
-            <ToolRenderer toolId={tool.id} />
-          </div>
-          
           {/* Related Tools */}
           {relatedTools.length > 0 && (
             <div className="mb-8 animate-slide-up">
@@ -164,11 +164,11 @@ const ToolPage: React.FC = () => {
                   <Link 
                     key={relatedTool.id} 
                     to={relatedTool.path}
-                    className="tool-card"
+                    className="tool-card dark:bg-gray-800/70 dark:hover:bg-gray-800/90 dark:border-gray-700"
                   >
                     <div className="p-6">
                       <div className="flex items-center mb-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mr-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 text-primary dark:bg-primary/20 flex items-center justify-center mr-3">
                           <relatedTool.icon className="w-5 h-5" />
                         </div>
                         <h3 className="font-medium">{relatedTool.name}</h3>
