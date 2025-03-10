@@ -15,6 +15,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import ToolCategoryPage from "./pages/ToolCategoryPage";
 import SuggestTool from "./pages/SuggestTool";
 import SupportPage from "./pages/SupportPage";
+import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 
 // Import CSS
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/tool-category/:categoryId" element={<ToolCategoryPage />} />
             <Route path="/suggest-tool" element={<SuggestTool />} />
             <Route path="/support" element={<SupportPage />} />
+            <Route path="/admin" element={<AdminPanel />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

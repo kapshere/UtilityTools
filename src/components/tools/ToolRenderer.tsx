@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useContext, createContext } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
 import DateCalculator from './DateCalculator';
@@ -25,10 +25,17 @@ interface ToolRendererProps {
   toolId: string;
 }
 
-// This component renders the appropriate tool based on the tool ID
-const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
-  const { toast } = useToast();
-  
+// Create a context for tools management
+export const ToolsContext = createContext<{
+  toolComponents: Record<string, React.ComponentType>;
+}>({
+  toolComponents: {},
+});
+
+export const useTools = () => useContext(ToolsContext);
+
+// Tools provider component
+export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   // Map of tool IDs to their corresponding components
   const toolComponents: Record<string, React.ComponentType> = {
     'calculator': Calculator,
@@ -50,6 +57,18 @@ const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
     'percentage-calculator': PercentageCalculator,
   };
 
+  return (
+    <ToolsContext.Provider value={{ toolComponents }}>
+      {children}
+    </ToolsContext.Provider>
+  );
+};
+
+// This component renders the appropriate tool based on the tool ID
+const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
+  const { toast } = useToast();
+  const { toolComponents } = useTools();
+  
   // Get the component for the specified tool ID
   const ToolComponent = toolComponents[toolId];
   
@@ -62,7 +81,7 @@ const ToolRenderer: React.FC<ToolRendererProps> = ({ toolId }) => {
         variant: "default",
       });
     }
-  }, [toolId, toast]);
+  }, [toolId, toast, ToolComponent]);
   
   if (!ToolComponent) {
     return <NotImplemented />;
