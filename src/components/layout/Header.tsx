@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useAdmin } from '@/hooks/useAdmin';
 import { 
   Menu, 
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
     (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
   );
   const location = useLocation();
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const { isAdmin } = useAdmin();
 
   useEffect(() => {
