@@ -105,6 +105,8 @@ const Calculator: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Calculator</h2>
+      
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="basic">Basic Calculator</TabsTrigger>

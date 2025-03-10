@@ -62,8 +62,10 @@ const MarkdownEditor: React.FC = () => {
     a.download = 'document.md';
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
     toast({
       title: 'Downloaded!',
       description: 'Markdown file has been downloaded.',
@@ -78,8 +80,10 @@ const MarkdownEditor: React.FC = () => {
     a.download = 'document.html';
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
     toast({
       title: 'Downloaded!',
       description: 'HTML file has been downloaded.',
@@ -88,6 +92,7 @@ const MarkdownEditor: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">Markdown Editor</h2>
       <p className="text-muted-foreground">
         Edit Markdown on the left and see the rendered preview on the right. Download your work when you're done.
       </p>

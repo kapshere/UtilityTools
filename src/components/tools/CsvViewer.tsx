@@ -85,7 +85,10 @@ const CsvViewer: React.FC = () => {
     link.download = `processed_${fileName || 'data.csv'}`;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 100);
     
     toast({
       title: "Downloaded",
@@ -104,6 +107,7 @@ const CsvViewer: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">CSV Viewer & Editor</h2>
       <p className="text-muted-foreground">
         Upload and view CSV files directly in your browser. Analyze data without sharing it with external services.
       </p>
@@ -120,7 +124,7 @@ const CsvViewer: React.FC = () => {
             )}
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <Button 
               variant="outline" 
               onClick={() => fileInputRef.current?.click()}

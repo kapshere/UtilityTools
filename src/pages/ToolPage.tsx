@@ -73,16 +73,16 @@ const ToolPage: React.FC = () => {
       <main className="flex-grow pt-24 pb-10">
         <div className="container mx-auto px-4">
           {/* Breadcrumbs */}
-          <div className="flex items-center text-sm text-muted-foreground mb-4 animate-fade-in">
-            <Link to="/" className="hover:text-primary">
+          <div className="flex items-center text-sm text-muted-foreground mb-4 animate-fade-in overflow-x-auto pb-2">
+            <Link to="/" className="hover:text-primary whitespace-nowrap">
               Home
             </Link>
-            <ChevronRight className="h-4 w-4 mx-2" />
-            <Link to={`/categories/${tool.category.id}`} className="hover:text-primary">
+            <ChevronRight className="h-4 w-4 mx-2 flex-shrink-0" />
+            <Link to={`/categories/${tool.category.id}`} className="hover:text-primary whitespace-nowrap">
               {tool.category.name}
             </Link>
-            <ChevronRight className="h-4 w-4 mx-2" />
-            <span>{tool.name}</span>
+            <ChevronRight className="h-4 w-4 mx-2 flex-shrink-0" />
+            <span className="whitespace-nowrap">{tool.name}</span>
           </div>
           
           {/* Back Button */}
@@ -95,13 +95,8 @@ const ToolPage: React.FC = () => {
             Back
           </Button>
           
-          {/* Tool Interface - Moved to top */}
-          <div className="glass-panel rounded-lg p-4 sm:p-8 mb-8 animate-scale-in shadow-hard dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] dark:bg-gray-900/60">
-            <ToolRenderer toolId={tool.id} />
-          </div>
-          
-          {/* Tool Header - Moved below tool interface */}
-          <div className="mb-8 animate-slide-up">
+          {/* Tool Header - Moved above tool interface */}
+          <div className="mb-6 animate-slide-up">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center">
                 <div className={cn(
@@ -153,6 +148,11 @@ const ToolPage: React.FC = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mt-4">
               {tool.description}
             </p>
+          </div>
+          
+          {/* Tool Interface */}
+          <div className="glass-panel rounded-lg p-4 sm:p-8 mb-8 animate-scale-in shadow-hard dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] dark:bg-gray-900/60">
+            <ToolRenderer toolId={tool.id} />
           </div>
           
           {/* Related Tools */}

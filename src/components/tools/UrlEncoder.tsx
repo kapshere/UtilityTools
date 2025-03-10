@@ -60,6 +60,7 @@ const UrlEncoder: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">URL Encoder/Decoder</h2>
       <p className="text-muted-foreground">
         {activeTab === 'encode' 
           ? 'Convert text or URLs to URL-encoded format for safe use in URLs and query parameters.' 

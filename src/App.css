@@ -1,3 +1,4 @@
+
 /* This file is now used only for custom app-specific styles that aren't covered by Tailwind */
 
 .tool-grid {
@@ -372,4 +373,31 @@
 
 .animate-slide-down {
   animation: slide-down 0.2s ease-out forwards;
+}
+
+/* Make horizontal scrolling smooth for tool tabs on small devices */
+.tool-tabs-scrollable {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 4px;
+}
+
+.tool-tabs-container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  min-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .tool-tabs-container > * {
+    flex: 0 0 auto;
+  }
+}
+
+/* Ensure downloads work properly */
+.download-button {
+  position: relative;
+  z-index: 10;
 }
