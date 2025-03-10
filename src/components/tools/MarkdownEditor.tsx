@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Copy, Download, FileText } from 'lucide-react';
+import { Copy, Download, FileText, Save } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -19,6 +19,9 @@ const MarkdownEditor: React.FC = () => {
       .replace(/^# (.*$)/gm, '<h1>$1</h1>')
       .replace(/^## (.*$)/gm, '<h2>$1</h2>')
       .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+      .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+      .replace(/^##### (.*$)/gm, '<h5>$1</h5>')
+      .replace(/^###### (.*$)/gm, '<h6>$1</h6>')
       // Bold
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       // Italic
@@ -31,8 +34,12 @@ const MarkdownEditor: React.FC = () => {
       .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
       // Inline code
       .replace(/`(.*?)`/g, '<code>$1</code>')
+      // Horizontal rule
+      .replace(/^\-\-\-$/gm, '<hr>')
+      // Blockquotes
+      .replace(/^> (.*)$/gm, '<blockquote>$1</blockquote>')
       // Paragraphs - must be last
-      .replace(/^(?!<h|<li|<pre)(.*)$/gm, '<p>$1</p>');
+      .replace(/^(?!<h|<li|<pre|<blockquote|<hr)(.*)$/gm, '<p>$1</p>');
     
     // Wrap lists
     html = html.replace(/<li>(.*?)<\/li>/g, function(match) {
@@ -92,21 +99,21 @@ const MarkdownEditor: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Markdown Editor</h2>
-      <p className="text-muted-foreground">
+      <h2 className="text-3xl font-bold mb-4">Markdown Editor</h2>
+      <p className="text-lg text-muted-foreground">
         Edit Markdown on the left and see the rendered preview on the right. Download your work when you're done.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-medium">Markdown Editor</h3>
+            <h3 className="text-xl font-medium">Markdown Editor</h3>
             <div className="flex space-x-2">
               <Button size="sm" variant="outline" onClick={handleCopy}>
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
-              <Button size="sm" variant="outline" onClick={handleDownload}>
+              <Button size="sm" variant="outline" onClick={handleDownload} className="download-button">
                 <Download className="h-4 w-4 mr-2" />
                 Download .md
               </Button>
@@ -125,8 +132,8 @@ const MarkdownEditor: React.FC = () => {
         
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-medium">Preview</h3>
-            <Button size="sm" variant="outline" onClick={handleHtmlDownload}>
+            <h3 className="text-xl font-medium">Preview</h3>
+            <Button size="sm" variant="outline" onClick={handleHtmlDownload} className="download-button">
               <FileText className="h-4 w-4 mr-2" />
               Download HTML
             </Button>
@@ -139,6 +146,13 @@ const MarkdownEditor: React.FC = () => {
             />
           </Card>
         </div>
+      </div>
+      
+      <div className="flex justify-center mt-6">
+        <Button size="lg" onClick={handleDownload} className="download-button">
+          <Save className="h-5 w-5 mr-2" />
+          Save Your Document
+        </Button>
       </div>
     </div>
   );

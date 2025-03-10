@@ -13,10 +13,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from '@/lib/utils';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from '@/components/ui/use-toast';
 
 const SupportPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('faq');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -32,21 +36,40 @@ const SupportPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', contactForm);
-    // Here you would normally send the form data to a server
+    setIsSubmitting(true);
     
-    // Reset form
-    setContactForm({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-    
-    // Show success message (in a real app, you would use a toast)
-    alert('Thank you for your message. We will get back to you soon!');
+    try {
+      // Send data to Supabase
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([contactForm]);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for your message. We will get back to you soon!",
+      });
+      
+      // Reset form
+      setContactForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqCategories = [
@@ -138,8 +161,8 @@ const SupportPage: React.FC = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
               <LifeBuoy className="w-10 h-10 text-primary" />
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">How Can We Help You?</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">How Can We Help You?</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Find answers, get support, or contact our team. We're here to ensure you have the best experience with our tools.
             </p>
             
@@ -147,7 +170,7 @@ const SupportPage: React.FC = () => {
               <Input
                 type="text"
                 placeholder="Search for answers..."
-                className="pl-10 pr-4 py-6 rounded-full shadow-lg"
+                className="pl-10 pr-4 py-6 text-lg rounded-full shadow-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -166,26 +189,26 @@ const SupportPage: React.FC = () => {
           <div className="flex flex-wrap gap-2 justify-center mb-8">
             <Button
               variant={activeTab === 'faq' ? 'default' : 'outline'}
-              className="rounded-full"
+              className="rounded-full text-lg py-6 px-8"
               onClick={() => setActiveTab('faq')}
             >
-              <FileQuestion className="w-4 h-4 mr-2" />
+              <FileQuestion className="w-5 h-5 mr-2" />
               FAQs
             </Button>
             <Button
               variant={activeTab === 'contact' ? 'default' : 'outline'}
-              className="rounded-full"
+              className="rounded-full text-lg py-6 px-8"
               onClick={() => setActiveTab('contact')}
             >
-              <Mail className="w-4 h-4 mr-2" />
+              <Mail className="w-5 h-5 mr-2" />
               Contact Us
             </Button>
             <Button
               variant={activeTab === 'help' ? 'default' : 'outline'}
-              className="rounded-full"
+              className="rounded-full text-lg py-6 px-8"
               onClick={() => setActiveTab('help')}
             >
-              <LifeBuoy className="w-4 h-4 mr-2" />
+              <LifeBuoy className="w-5 h-5 mr-2" />
               Help Center
             </Button>
           </div>
@@ -224,8 +247,8 @@ const SupportPage: React.FC = () => {
           <div className={cn("transition-all duration-300", activeTab === 'contact' ? 'block' : 'hidden')}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-1 space-y-6">
-                <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
-                <p className="text-muted-foreground mb-6">
+                <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
+                <p className="text-xl text-muted-foreground mb-6">
                   We'd love to hear from you. Please fill out the form or use one of our contact methods.
                 </p>
                 
@@ -236,9 +259,9 @@ const SupportPage: React.FC = () => {
                         <method.icon className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-medium">{method.title}</h4>
-                        <p className="text-sm text-muted-foreground">{method.description}</p>
-                        <p className="text-sm font-medium mt-1">{method.action}</p>
+                        <h4 className="font-medium text-lg">{method.title}</h4>
+                        <p className="text-muted-foreground">{method.description}</p>
+                        <p className="font-medium mt-1">{method.action}</p>
                       </div>
                     </div>
                   ))}
@@ -247,11 +270,11 @@ const SupportPage: React.FC = () => {
               
               <div className="lg:col-span-2">
                 <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
-                  <h3 className="text-xl font-semibold mb-4">Send Us a Message</h3>
+                  <h3 className="text-2xl font-semibold mb-4">Send Us a Message</h3>
                   <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       <div className="space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">
+                        <label htmlFor="name" className="text-lg font-medium">
                           Your Name
                         </label>
                         <Input
@@ -261,10 +284,11 @@ const SupportPage: React.FC = () => {
                           value={contactForm.name}
                           onChange={handleFormChange}
                           required
+                          className="py-6 text-base"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium">
+                        <label htmlFor="email" className="text-lg font-medium">
                           Email Address
                         </label>
                         <Input
@@ -275,12 +299,13 @@ const SupportPage: React.FC = () => {
                           value={contactForm.email}
                           onChange={handleFormChange}
                           required
+                          className="py-6 text-base"
                         />
                       </div>
                     </div>
                     
                     <div className="space-y-2 mb-4">
-                      <label htmlFor="subject" className="text-sm font-medium">
+                      <label htmlFor="subject" className="text-lg font-medium">
                         Subject
                       </label>
                       <Input
@@ -290,11 +315,12 @@ const SupportPage: React.FC = () => {
                         value={contactForm.subject}
                         onChange={handleFormChange}
                         required
+                        className="py-6 text-base"
                       />
                     </div>
                     
                     <div className="space-y-2 mb-6">
-                      <label htmlFor="message" className="text-sm font-medium">
+                      <label htmlFor="message" className="text-lg font-medium">
                         Message
                       </label>
                       <Textarea
@@ -305,13 +331,13 @@ const SupportPage: React.FC = () => {
                         value={contactForm.message}
                         onChange={handleFormChange}
                         required
-                        className="resize-none"
+                        className="resize-none text-base"
                       />
                     </div>
                     
-                    <Button type="submit" className="w-full md:w-auto">
-                      <Send className="w-4 h-4 mr-2" />
-                      Send Message
+                    <Button type="submit" className="w-full md:w-auto py-6 px-8 text-lg" disabled={isSubmitting}>
+                      <Send className="w-5 h-5 mr-2" />
+                      {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                   </form>
                 </div>

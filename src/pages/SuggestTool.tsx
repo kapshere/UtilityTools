@@ -11,9 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { ChevronRight, SendIcon, LightbulbIcon } from 'lucide-react';
 import { categories } from '@/data/tools';
+import { supabase } from "@/integrations/supabase/client";
 
 const SuggestTool: React.FC = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -31,25 +33,41 @@ const SuggestTool: React.FC = () => {
     setFormData(prev => ({ ...prev, category: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // In a real app, you would send this data to a backend
-    console.log('Tool suggestion submitted:', formData);
-    
-    toast({
-      title: "Suggestion Received!",
-      description: "Thank you for suggesting a tool. We'll review it soon.",
-    });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      description: '',
-      category: '',
-      link: '',
-      email: ''
-    });
+    try {
+      // Send data to Supabase
+      const { error } = await supabase
+        .from('tool_suggestions')
+        .insert([formData]);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Suggestion Received!",
+        description: "Thank you for suggesting a tool. We'll review it soon.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        description: '',
+        category: '',
+        link: '',
+        email: ''
+      });
+    } catch (error) {
+      console.error('Error submitting tool suggestion:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem submitting your suggestion. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -69,7 +87,7 @@ const SuggestTool: React.FC = () => {
           
           {/* Page Header */}
           <div className="mb-12 animate-slide-up">
-            <h1 className="text-3xl font-bold mb-4 flex items-center">
+            <h1 className="text-4xl font-bold mb-4 flex items-center">
               <span className="bg-primary/10 text-primary rounded-full p-2 mr-3">
                 <LightbulbIcon className="h-6 w-6" />
               </span>
@@ -85,7 +103,7 @@ const SuggestTool: React.FC = () => {
           <div className="max-w-2xl mx-auto glass-card p-8 animate-fade-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="name">Tool Name</Label>
+                <Label htmlFor="name" className="text-lg">Tool Name</Label>
                 <Input 
                   id="name"
                   name="name"
@@ -93,11 +111,12 @@ const SuggestTool: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  className="text-base py-6"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description" className="text-lg">Description</Label>
                 <Textarea 
                   id="description"
                   name="description"
@@ -105,18 +124,18 @@ const SuggestTool: React.FC = () => {
                   value={formData.description}
                   onChange={handleChange}
                   required
-                  className="min-h-[120px]"
+                  className="min-h-[120px] text-base"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category" className="text-lg">Category</Label>
                 <Select 
                   value={formData.category} 
                   onValueChange={handleCategoryChange}
                   required
                 >
-                  <SelectTrigger id="category">
+                  <SelectTrigger id="category" className="text-base py-6">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -130,7 +149,7 @@ const SuggestTool: React.FC = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="link">Tool Website (Optional)</Label>
+                <Label htmlFor="link" className="text-lg">Tool Website (Optional)</Label>
                 <Input 
                   id="link"
                   name="link"
@@ -138,11 +157,12 @@ const SuggestTool: React.FC = () => {
                   placeholder="https://example.com"
                   value={formData.link}
                   onChange={handleChange}
+                  className="text-base py-6"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">Your Email</Label>
+                <Label htmlFor="email" className="text-lg">Your Email</Label>
                 <Input 
                   id="email"
                   name="email"
@@ -151,15 +171,16 @@ const SuggestTool: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  className="text-base py-6"
                 />
                 <p className="text-sm text-muted-foreground">
                   We'll notify you when your suggested tool is added.
                 </p>
               </div>
               
-              <Button type="submit" className="w-full">
-                <SendIcon className="mr-2 h-4 w-4" />
-                Submit Suggestion
+              <Button type="submit" className="w-full py-6 text-lg" disabled={isSubmitting}>
+                <SendIcon className="mr-2 h-5 w-5" />
+                {isSubmitting ? "Submitting..." : "Submit Suggestion"}
               </Button>
             </form>
           </div>
