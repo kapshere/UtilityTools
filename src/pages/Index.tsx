@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -202,44 +201,46 @@ const Index: React.FC = () => {
           </h2>
           
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="w-full flex flex-wrap justify-center mb-8 bg-transparent">
-              <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white">
-                <Grid3X3 className="w-4 h-4 mr-2" />
-                All Tools
-              </TabsTrigger>
-              <TabsTrigger value="pdf" className="m-1 data-[state=active]:bg-red-500 data-[state=active]:text-white">
-                <FileText className="w-4 h-4 mr-2" />
-                PDF Tools
-              </TabsTrigger>
-              <TabsTrigger value="image" className="m-1 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                <FileImage className="w-4 h-4 mr-2" />
-                Image Tools
-              </TabsTrigger>
-              <TabsTrigger value="text" className="m-1 data-[state=active]:bg-purple-500 data-[state=active]:text-white">
-                <Type className="w-4 h-4 mr-2" />
-                Text Tools
-              </TabsTrigger>
-              <TabsTrigger value="calculators" className="m-1 data-[state=active]:bg-amber-500 data-[state=active]:text-white">
-                <Calculator className="w-4 h-4 mr-2" />
-                Calculators
-              </TabsTrigger>
-              <TabsTrigger value="ai" className="m-1 data-[state=active]:bg-emerald-500 data-[state=active]:text-white">
-                <BotIcon className="w-4 h-4 mr-2" />
-                AI Tools
-              </TabsTrigger>
-              <TabsTrigger value="utility" className="m-1 data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
-                <Wrench className="w-4 h-4 mr-2" />
-                Utility Tools
-              </TabsTrigger>
-              <TabsTrigger value="security" className="m-1 data-[state=active]:bg-gray-500 data-[state=active]:text-white">
-                <Lock className="w-4 h-4 mr-2" />
-                Security Tools
-              </TabsTrigger>
-              <TabsTrigger value="games" className="m-1 data-[state=active]:bg-pink-500 data-[state=active]:text-white">
-                <Gamepad className="w-4 h-4 mr-2" />
-                Game Tools
-              </TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto pb-2 -mx-4 px-4">
+              <TabsList className="w-max flex flex-nowrap justify-start mb-8 bg-transparent">
+                <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">
+                  <Grid3X3 className="w-4 h-4 mr-2" />
+                  All Tools
+                </TabsTrigger>
+                <TabsTrigger value="pdf" className="m-1 data-[state=active]:bg-red-500 data-[state=active]:text-white whitespace-nowrap">
+                  <FileText className="w-4 h-4 mr-2" />
+                  PDF Tools
+                </TabsTrigger>
+                <TabsTrigger value="image" className="m-1 data-[state=active]:bg-blue-500 data-[state=active]:text-white whitespace-nowrap">
+                  <FileImage className="w-4 h-4 mr-2" />
+                  Image Tools
+                </TabsTrigger>
+                <TabsTrigger value="text" className="m-1 data-[state=active]:bg-purple-500 data-[state=active]:text-white whitespace-nowrap">
+                  <Type className="w-4 h-4 mr-2" />
+                  Text Tools
+                </TabsTrigger>
+                <TabsTrigger value="calculators" className="m-1 data-[state=active]:bg-amber-500 data-[state=active]:text-white whitespace-nowrap">
+                  <Calculator className="w-4 h-4 mr-2" />
+                  Calculators
+                </TabsTrigger>
+                <TabsTrigger value="ai" className="m-1 data-[state=active]:bg-emerald-500 data-[state=active]:text-white whitespace-nowrap">
+                  <BotIcon className="w-4 h-4 mr-2" />
+                  AI Tools
+                </TabsTrigger>
+                <TabsTrigger value="utility" className="m-1 data-[state=active]:bg-cyan-500 data-[state=active]:text-white whitespace-nowrap">
+                  <Wrench className="w-4 h-4 mr-2" />
+                  Utility Tools
+                </TabsTrigger>
+                <TabsTrigger value="security" className="m-1 data-[state=active]:bg-gray-500 data-[state=active]:text-white whitespace-nowrap">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Security Tools
+                </TabsTrigger>
+                <TabsTrigger value="games" className="m-1 data-[state=active]:bg-pink-500 data-[state=active]:text-white whitespace-nowrap">
+                  <Gamepad className="w-4 h-4 mr-2" />
+                  Game Tools
+                </TabsTrigger>
+              </TabsList>
+            </div>
             
             <TabsContent value="all" className="mt-6 focus-visible:outline-none">
               <div className="bg-white/60 dark:bg-black/30 p-6 rounded-xl shadow-sm">
