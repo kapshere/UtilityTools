@@ -179,47 +179,47 @@ const Index: React.FC = () => {
         </section>
 
         <section className="py-8 container mx-auto px-4 my-6 bg-pattern rounded-xl">
-          <h2 className="text-2xl font-bold mb-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center">
             <span className="gradient-text">Explore Our Tools Collection</span>
           </h2>
           
           <Tabs defaultValue="all" className="w-full">
             <div className="overflow-x-auto pb-2 -mx-4 px-4">
               <TabsList className="w-max flex flex-nowrap justify-center mx-auto mb-8 bg-transparent">
-                <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">
-                  <Grid3X3 className="w-4 h-4 mr-2" />
+                <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Grid3X3 className="w-5 h-5 mr-2" />
                   All Tools
                 </TabsTrigger>
-                <TabsTrigger value="pdf" className="m-1 data-[state=active]:bg-red-500 data-[state=active]:text-white whitespace-nowrap">
-                  <FileText className="w-4 h-4 mr-2" />
+                <TabsTrigger value="pdf" className="m-1 data-[state=active]:bg-red-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <FileText className="w-5 h-5 mr-2" />
                   PDF Tools
                 </TabsTrigger>
-                <TabsTrigger value="image" className="m-1 data-[state=active]:bg-blue-500 data-[state=active]:text-white whitespace-nowrap">
-                  <FileImage className="w-4 h-4 mr-2" />
+                <TabsTrigger value="image" className="m-1 data-[state=active]:bg-blue-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <FileImage className="w-5 h-5 mr-2" />
                   Image Tools
                 </TabsTrigger>
-                <TabsTrigger value="text" className="m-1 data-[state=active]:bg-purple-500 data-[state=active]:text-white whitespace-nowrap">
-                  <Type className="w-4 h-4 mr-2" />
+                <TabsTrigger value="text" className="m-1 data-[state=active]:bg-purple-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Type className="w-5 h-5 mr-2" />
                   Text Tools
                 </TabsTrigger>
-                <TabsTrigger value="calculators" className="m-1 data-[state=active]:bg-amber-500 data-[state=active]:text-white whitespace-nowrap">
-                  <Calculator className="w-4 h-4 mr-2" />
+                <TabsTrigger value="calculators" className="m-1 data-[state=active]:bg-amber-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Calculator className="w-5 h-5 mr-2" />
                   Calculators
                 </TabsTrigger>
-                <TabsTrigger value="ai" className="m-1 data-[state=active]:bg-emerald-500 data-[state=active]:text-white whitespace-nowrap">
-                  <BotIcon className="w-4 h-4 mr-2" />
+                <TabsTrigger value="ai" className="m-1 data-[state=active]:bg-emerald-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <BotIcon className="w-5 h-5 mr-2" />
                   AI Tools
                 </TabsTrigger>
-                <TabsTrigger value="utility" className="m-1 data-[state=active]:bg-cyan-500 data-[state=active]:text-white whitespace-nowrap">
-                  <Wrench className="w-4 h-4 mr-2" />
+                <TabsTrigger value="utility" className="m-1 data-[state=active]:bg-cyan-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Wrench className="w-5 h-5 mr-2" />
                   Utility Tools
                 </TabsTrigger>
-                <TabsTrigger value="security" className="m-1 data-[state=active]:bg-gray-500 data-[state=active]:text-white whitespace-nowrap">
-                  <Lock className="w-4 h-4 mr-2" />
+                <TabsTrigger value="security" className="m-1 data-[state=active]:bg-gray-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Lock className="w-5 h-5 mr-2" />
                   Security Tools
                 </TabsTrigger>
-                <TabsTrigger value="games" className="m-1 data-[state=active]:bg-pink-500 data-[state=active]:text-white whitespace-nowrap">
-                  <Gamepad className="w-4 h-4 mr-2" />
+                <TabsTrigger value="games" className="m-1 data-[state=active]:bg-pink-500 data-[state=active]:text-white whitespace-nowrap text-base">
+                  <Gamepad className="w-5 h-5 mr-2" />
                   Game Tools
                 </TabsTrigger>
               </TabsList>
