@@ -21,11 +21,9 @@ const Index: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   
-  // Define tool collections
   const featuredTools = tools.filter(tool => tool.featured);
   const newTools = tools.filter(tool => tool.new);
   
-  // Create tool collections for different categories
   const pdfTools = tools.filter(tool => 
     tool.category.id === "pdf" || 
     (tool.name.toLowerCase().includes("pdf") || tool.description.toLowerCase().includes("pdf"))
@@ -71,12 +69,6 @@ const Index: React.FC = () => {
     tool.description.toLowerCase().includes("dice")
   );
 
-  // Calculate tool count per category
-  const categoryToolCounts = categories.map(category => ({
-    ...category,
-    toolCount: tools.filter(tool => tool.category.id === category.id).length
-  }));
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -84,12 +76,9 @@ const Index: React.FC = () => {
     }
   };
 
-  // Top tools by usage (simulated - in a real app, this would come from analytics)
   const [topTools, setTopTools] = useState<typeof tools>([]);
   
   useEffect(() => {
-    // In a real app, this would be fetched from analytics
-    // Here we're just randomizing a subset of featured tools to simulate changes
     const simulateTopTools = () => {
       const shuffled = [...featuredTools].sort(() => 0.5 - Math.random());
       return shuffled.slice(0, 8);
@@ -97,7 +86,6 @@ const Index: React.FC = () => {
     
     setTopTools(simulateTopTools());
     
-    // Change top tools every 30 seconds for demonstration
     const interval = setInterval(() => {
       setTopTools(simulateTopTools());
     }, 30000);
@@ -110,7 +98,6 @@ const Index: React.FC = () => {
       <Header />
       
       <main className="flex-grow pt-16 pb-10">
-        {/* Hero Carousel Section */}
         <section className="relative overflow-hidden">
           <HeroCarousel />
           
@@ -134,7 +121,6 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        {/* Categories Bar */}
         <section id="categories" className="py-6 sm:py-8 container mx-auto px-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg sm:text-xl font-semibold flex items-center">
@@ -154,7 +140,6 @@ const Index: React.FC = () => {
           <CategoryBar />
         </section>
         
-        {/* New Tools */}
         <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-emerald-50/50 to-green-50/50 dark:from-emerald-950/10 dark:to-green-950/10 rounded-xl my-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
@@ -174,7 +159,6 @@ const Index: React.FC = () => {
           <ToolsGrid tools={newTools.length > 0 ? newTools.slice(0, 4) : tools.filter(tool => tool.category.id === "development").slice(0, 4)} />
         </section>
         
-        {/* Featured Tools */}
         <section className="py-6 sm:py-8 container mx-auto px-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-950/10 dark:to-indigo-950/10 rounded-xl my-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="section-heading text-lg sm:text-xl lg:text-2xl flex items-center">
@@ -194,7 +178,6 @@ const Index: React.FC = () => {
           <ToolsGrid tools={topTools.length > 0 ? topTools : featuredTools.slice(0, 4)} />
         </section>
 
-        {/* Tools By Category Tabbed Interface */}
         <section className="py-8 container mx-auto px-4 my-6 bg-pattern rounded-xl">
           <h2 className="text-2xl font-bold mb-8 text-center">
             <span className="gradient-text">Explore Our Tools Collection</span>
@@ -202,7 +185,7 @@ const Index: React.FC = () => {
           
           <Tabs defaultValue="all" className="w-full">
             <div className="overflow-x-auto pb-2 -mx-4 px-4">
-              <TabsList className="w-max flex flex-nowrap justify-start mb-8 bg-transparent">
+              <TabsList className="w-max flex flex-nowrap justify-center mx-auto mb-8 bg-transparent">
                 <TabsTrigger value="all" className="m-1 data-[state=active]:bg-primary data-[state=active]:text-white whitespace-nowrap">
                   <Grid3X3 className="w-4 h-4 mr-2" />
                   All Tools
@@ -266,7 +249,7 @@ const Index: React.FC = () => {
                   <FileText className="mr-2 h-5 w-5 text-red-500" />
                   PDF Tools
                 </h3>
-                <ToolsGrid tools={pdfTools.length > 0 ? pdfTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
+                <ToolsGrid tools={pdfTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-red-50 hover:bg-red-100 text-red-600 border-red-200">
                     <Link to="/tool-category/pdf">
@@ -284,7 +267,7 @@ const Index: React.FC = () => {
                   <FileImage className="mr-2 h-5 w-5 text-blue-500" />
                   Image Tools
                 </h3>
-                <ToolsGrid tools={imageTools.length > 0 ? imageTools : tools.filter(tool => tool.category.id === "files").slice(0, 4)} />
+                <ToolsGrid tools={imageTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-blue-50 hover:bg-blue-100 text-blue-600 border-blue-200">
                     <Link to="/tool-category/image">
@@ -302,7 +285,7 @@ const Index: React.FC = () => {
                   <Type className="mr-2 h-5 w-5 text-purple-500" />
                   Text Tools
                 </h3>
-                <ToolsGrid tools={textTools.length > 0 ? textTools : tools.filter(tool => tool.category.id === "text").slice(0, 4)} />
+                <ToolsGrid tools={textTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-purple-50 hover:bg-purple-100 text-purple-600 border-purple-200">
                     <Link to="/tool-category/text">
@@ -320,7 +303,7 @@ const Index: React.FC = () => {
                   <Calculator className="mr-2 h-5 w-5 text-amber-500" />
                   Calculators
                 </h3>
-                <ToolsGrid tools={calculatorTools.length > 0 ? calculatorTools : tools.filter(tool => tool.category.id === "calculation").slice(0, 4)} />
+                <ToolsGrid tools={calculatorTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-amber-50 hover:bg-amber-100 text-amber-600 border-amber-200">
                     <Link to="/tool-category/calculators">
@@ -338,7 +321,7 @@ const Index: React.FC = () => {
                   <BrainCircuit className="mr-2 h-5 w-5 text-emerald-500" />
                   AI Tools
                 </h3>
-                <ToolsGrid tools={aiTools.length > 0 ? aiTools : tools.filter(tool => tool.name.toLowerCase().includes("generator")).slice(0, 4)} />
+                <ToolsGrid tools={aiTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-200">
                     <Link to="/tool-category/ai">
@@ -356,7 +339,7 @@ const Index: React.FC = () => {
                   <Wrench className="mr-2 h-5 w-5 text-cyan-500" />
                   Utility Tools
                 </h3>
-                <ToolsGrid tools={utilityTools.length > 0 ? utilityTools.slice(0, 8) : tools.filter(tool => tool.category.id === "transforms").slice(0, 4)} />
+                <ToolsGrid tools={utilityTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-cyan-50 hover:bg-cyan-100 text-cyan-600 border-cyan-200">
                     <Link to="/tool-category/utility">
@@ -374,7 +357,7 @@ const Index: React.FC = () => {
                   <Shield className="mr-2 h-5 w-5 text-gray-700" />
                   Security Tools
                 </h3>
-                <ToolsGrid tools={securityTools.length > 0 ? securityTools : tools.filter(tool => tool.name.toLowerCase().includes("password")).slice(0, 4)} />
+                <ToolsGrid tools={securityTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200">
                     <Link to="/tool-category/security">
@@ -392,7 +375,7 @@ const Index: React.FC = () => {
                   <Gamepad className="mr-2 h-5 w-5 text-pink-500" />
                   Game Tools
                 </h3>
-                <ToolsGrid tools={gameTools.length > 0 ? gameTools : tools.filter(tool => tool.name.toLowerCase().includes("random")).slice(0, 4)} />
+                <ToolsGrid tools={gameTools} />
                 <div className="text-center mt-6">
                   <Button asChild variant="outline" className="bg-pink-50 hover:bg-pink-100 text-pink-600 border-pink-200">
                     <Link to="/tool-category/games">
@@ -406,7 +389,6 @@ const Index: React.FC = () => {
           </Tabs>
         </section>
         
-        {/* All Tools CTA */}
         <section className="py-6 sm:py-8 container mx-auto px-4">
           <div className="glass-card p-8 sm:p-10 rounded-xl text-center shadow-md transform hover:shadow-lg transition-all duration-300">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Explore Our Complete Collection</h2>
@@ -422,7 +404,6 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        {/* Support Section */}
         <section className="py-8 sm:py-12 container mx-auto px-4 mt-6">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-2xl p-6 sm:p-10 shadow-md">
             <div className="text-center mb-8">

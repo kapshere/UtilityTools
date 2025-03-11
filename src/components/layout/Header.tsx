@@ -25,7 +25,8 @@ import {
   Sun,
   ShieldCheck, 
   Clock,
-  Star
+  Star,
+  Lightbulb
 } from 'lucide-react';
 
 const Header: React.FC = () => {
@@ -85,6 +86,7 @@ const Header: React.FC = () => {
     },
     { icon: <Grid3X3 size={16} />, text: 'Categories', path: '/categories' },
     { icon: <Heart size={16} />, text: 'Favorites', path: '/favorites' },
+    { icon: <Lightbulb size={16} />, text: 'Suggest Tool', path: '/suggest-tool' },
     { icon: <HelpCircle size={16} />, text: 'Support', path: '/support' },
   ];
 
