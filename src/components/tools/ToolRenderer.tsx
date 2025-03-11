@@ -18,6 +18,11 @@ import HashGenerator from './HashGenerator';
 import CharacterCounter from './CharacterCounter';
 import PercentageCalculator from './PercentageCalculator';
 import NotImplemented from './NotImplemented';
+import PDFMerger from './PDFMerger';
+import PDFSplitter from './PDFSplitter';
+import PDFCompressor from './PDFCompressor';
+import PDFToImage from './PDFToImage';
+import PDFTextExtractor from './PDFTextExtractor';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -55,6 +60,11 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'hash-generator': HashGenerator,
     'character-counter': CharacterCounter,
     'percentage-calculator': PercentageCalculator,
+    'pdf-merger': PDFMerger,
+    'pdf-splitter': PDFSplitter,
+    'pdf-compressor': PDFCompressor,
+    'pdf-to-image': PDFToImage,
+    'pdf-text-extractor': PDFTextExtractor,
   };
 
   return (
