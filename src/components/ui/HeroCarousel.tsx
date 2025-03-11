@@ -74,7 +74,7 @@ const HeroCarousel: React.FC = () => {
   }, [currentSlide]);
   
   return (
-    <div className="relative overflow-hidden h-[350px] xs:h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
+    <div className="relative overflow-hidden h-[350px] xs:h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[600px]">
       {slides.map((slide, index) => {
         const Icon = slide.icon;
         
@@ -133,17 +133,17 @@ const HeroCarousel: React.FC = () => {
                 </div>
               </div>
               
-              <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-2 sm:mb-4 text-white drop-shadow-md">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-2 sm:mb-4 text-white drop-shadow-md">
                 {slide.title}
               </h1>
-              <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 mb-4 xs:mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow">
+              <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 mb-4 xs:mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow">
                 {slide.subtitle}
               </p>
               
               <Button 
                 asChild 
                 size="lg" 
-                className="rounded-full px-4 xs:px-6 sm:px-8 py-1 xs:py-2 sm:py-3 transition-transform hover:scale-105 bg-white/90 hover:bg-white text-gray-900 font-medium shadow-lg border border-white/20"
+                className="rounded-full px-4 xs:px-6 sm:px-8 py-2 xs:py-3 sm:py-4 md:py-5 text-sm sm:text-base md:text-lg transition-transform hover:scale-105 bg-white/90 hover:bg-white text-gray-900 font-medium shadow-lg border border-white/20"
               >
                 <Link to={slide.buttonLink}>
                   {slide.buttonText}
