@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { useAdmin } from '@/hooks/useAdmin';
+import { tools, ToolType } from '@/data/tools';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -48,6 +49,7 @@ type ToolSuggestion = {
 
 const AdminPanel: React.FC = () => {
   const { isAdmin, login, logout } = useAdmin();
+  const [toolsList, setToolsList] = useState<ToolType[]>([...tools]);
   const [editingTool, setEditingTool] = useState<ToolType | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -119,6 +121,28 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  // Update tool
+  const updateTool = (updatedTool: ToolType) => {
+    setToolsList(prev => 
+      prev.map(tool => tool.id === updatedTool.id ? updatedTool : tool)
+    );
+    setIsEditDialogOpen(false);
+    setEditingTool(null);
+    
+    toast({
+      title: "Tool updated",
+      description: `${updatedTool.name} has been updated successfully.`,
+      variant: "default",
+    });
+  };
+
+  // Open reply dialog
+  const openReplyDialog = (message: ContactMessage) => {
+    setReplyingTo(message);
+    setReplyMessage(message.reply_text || '');
+    setIsReplyDialogOpen(true);
+  };
+  
   // Send reply to contact message
   const sendReply = async () => {
     if (!replyingTo) return;
@@ -152,6 +176,9 @@ const AdminPanel: React.FC = () => {
         description: "Your reply has been sent successfully.",
       });
       
+      // In a real app, you would send an email here
+      console.log(`Sending email to ${replyingTo.email} with reply: ${replyMessage}`);
+      
     } catch (error) {
       console.error('Error sending reply:', error);
       toast({
@@ -160,6 +187,12 @@ const AdminPanel: React.FC = () => {
         variant: "destructive",
       });
     }
+  };
+  
+  // Open review dialog for tool suggestion
+  const openReviewDialog = (suggestion: ToolSuggestion) => {
+    setReviewingTool(suggestion);
+    setIsReviewDialogOpen(true);
   };
   
   // Review tool suggestion
@@ -194,6 +227,9 @@ const AdminPanel: React.FC = () => {
         description: `The tool suggestion has been ${approved ? 'approved' : 'rejected'}.`,
       });
       
+      // In a real app, you would send an email to the user here
+      console.log(`Sending email to ${reviewingTool.email} about their suggestion status: ${approved ? 'Approved' : 'Rejected'}`);
+      
     } catch (error) {
       console.error('Error reviewing tool suggestion:', error);
       toast({
@@ -204,16 +240,10 @@ const AdminPanel: React.FC = () => {
     }
   };
 
-  // Open dialogs
-  const openReplyDialog = (message: ContactMessage) => {
-    setReplyingTo(message);
-    setReplyMessage(message.reply_text || '');
-    setIsReplyDialogOpen(true);
-  };
-
-  const openReviewDialog = (suggestion: ToolSuggestion) => {
-    setReviewingTool(suggestion);
-    setIsReviewDialogOpen(true);
+  // Edit tool dialog
+  const openEditDialog = (tool: ToolType) => {
+    setEditingTool({...tool});
+    setIsEditDialogOpen(true);
   };
 
   return (
@@ -271,7 +301,11 @@ const AdminPanel: React.FC = () => {
               </TabsList>
               
               <TabsContent value="tools" className="space-y-4">
-                <ToolsManagement />
+                <ToolsManagement 
+                  toolsList={toolsList}
+                  setToolsList={setToolsList}
+                  openEditDialog={openEditDialog}
+                />
               </TabsContent>
               
               <TabsContent value="categories" className="space-y-4">
@@ -307,7 +341,7 @@ const AdminPanel: React.FC = () => {
         setIsOpen={setIsEditDialogOpen}
         editingTool={editingTool}
         setEditingTool={setEditingTool}
-        updateTool={() => {}}
+        updateTool={updateTool}
       />
       
       <ReplyDialog 
