@@ -19,7 +19,7 @@ const PDFSplitter: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [splitMode, setSplitMode] = useState<'range' | 'individual'>('range');
   const [rangeStart, setRangeStart] = useState<string>('1');
-  const [rangeEnd, setRangeStart] = useState<string>('');
+  const [rangeEnd, setRangeEnd] = useState<string>('');
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -274,7 +274,7 @@ const PDFSplitter: React.FC = () => {
                         min="1"
                         max={pageCount}
                         value={rangeEnd}
-                        onChange={e => setRangeStart(e.target.value)}
+                        onChange={e => setRangeEnd(e.target.value)}
                       />
                     </div>
                   </div>
