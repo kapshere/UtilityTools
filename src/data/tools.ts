@@ -1,3 +1,4 @@
+
 import { 
   Calculator, Clock, Calendar, QrCode, Ruler, Compass, 
   FileText, FileImage, FileVideo, FileAudio, Map, Globe, 
@@ -9,7 +10,7 @@ import {
   Type, Quote, List, ListOrdered, Binary, BrainCircuit, 
   Cpu, Monitor, Scan, Search, FileJson, Fingerprint, 
   FileDiff, Regex, XCircle, Check, ChevronRight, Trophy,
-  File, Briefcase, TrendingUp, Gamepad2, Strategy, Target,
+  File, Briefcase, TrendingUp, Gamepad2, Target,
   Coins, Hand
 } from "lucide-react";
 
