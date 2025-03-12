@@ -44,7 +44,9 @@ const ToolsManagement: React.FC = () => {
             id: tool.category?.id || '',
             name: tool.category?.name || '',
             description: tool.category?.description || '',
-            icon: tool.category?.icon || '',
+            // The icon function is part of our ToolType but not in the database
+            // So we create a placeholder that returns null
+            icon: () => null,
             color: ''
           },
           path: tool.url || '',
