@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,11 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { Upload, FileImage, RefreshCw, Download, X, FileText, Layers } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
-// Note: In a real app, you would use a library like pdf.js to render PDFs to images
+import * as pdfjs from 'pdfjs-dist';
+
+// Set up PDF.js worker
+const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const PDFToImage: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -40,8 +43,9 @@ const PDFToImage: React.FC = () => {
       
       try {
         const arrayBuffer = await selectedFile.arrayBuffer();
-        const pdfDoc = await PDFDocument.load(arrayBuffer);
-        const pages = pdfDoc.getPageCount();
+        const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+        const pages = pdf.numPages;
         setPageCount(pages);
         // Select all pages by default
         setSelectedPages(Array.from({ length: pages }, (_, i) => i));
@@ -81,8 +85,9 @@ const PDFToImage: React.FC = () => {
       
       try {
         const arrayBuffer = await droppedFile.arrayBuffer();
-        const pdfDoc = await PDFDocument.load(arrayBuffer);
-        const pages = pdfDoc.getPageCount();
+        const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+        const pages = pdf.numPages;
         setPageCount(pages);
         // Select all pages by default
         setSelectedPages(Array.from({ length: pages }, (_, i) => i));
@@ -124,51 +129,53 @@ const PDFToImage: React.FC = () => {
     setSelectedPages([]);
   };
 
-  // For demo purposes, we'll simulate PDF to image conversion
-  // In a real app, you would use a library like pdf.js to render PDFs to images
   const convertToImages = async () => {
     if (!file || selectedPages.length === 0) return;
     
     setIsLoading(true);
     try {
-      // Simulated conversion - in a real app, you would use pdf.js or similar
+      // Using PDF.js to render PDF pages as images
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
+      const pdf = await loadingTask.promise;
+      
       const newImages = [];
       
       // Sort pages to process them in order
       const sortedPages = [...selectedPages].sort((a, b) => a - b);
       
       for (const pageIndex of sortedPages) {
-        // Simulate processing time
-        await new Promise(resolve => setTimeout(resolve, 300));
+        // Get the page
+        const page = await pdf.getPage(pageIndex + 1); // PDF.js uses 1-based indexing
         
-        // For demo, create a placeholder image or canvas
+        // Get viewport and prepare canvas
+        const viewport = page.getViewport({ scale: 2.0 }); // Scale for better quality
         const canvas = document.createElement('canvas');
-        canvas.width = 800;
-        canvas.height = 1100;
         const ctx = canvas.getContext('2d');
         
-        if (ctx) {
-          // Draw a placeholder "page"
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          
-          ctx.strokeStyle = '#cccccc';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-          
-          ctx.fillStyle = '#333333';
-          ctx.font = '20px Arial';
-          ctx.fillText(`Page ${pageIndex + 1} of PDF: ${file.name}`, 50, 50);
-          
-          // Draw some dummy content
-          ctx.fillStyle = '#666666';
-          for (let i = 0; i < 20; i++) {
-            ctx.fillRect(50, 100 + i * 30, Math.random() * 700, 10);
-          }
-          
-          const imageUrl = canvas.toDataURL(imageFormat === 'png' ? 'image/png' : 'image/jpeg', imageQuality / 100);
-          newImages.push({ page: pageIndex + 1, url: imageUrl });
+        if (!ctx) {
+          console.error('Could not get canvas context');
+          continue;
         }
+        
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render the page content
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        
+        await page.render(renderContext).promise;
+        
+        // Get image data from canvas
+        const imageUrl = canvas.toDataURL(
+          imageFormat === 'png' ? 'image/png' : 'image/jpeg', 
+          imageQuality / 100
+        );
+        
+        newImages.push({ page: pageIndex + 1, url: imageUrl });
       }
       
       setConvertedImages(newImages);

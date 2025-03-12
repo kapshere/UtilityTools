@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { Upload, FileText, RefreshCw, Copy, Download, X } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
-// Note: In a real application, you would use a library like pdf.js to extract text
+import * as pdfjs from 'pdfjs-dist';
+
+// Set up PDF.js worker
+const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const PDFTextExtractor: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -72,60 +75,57 @@ const PDFTextExtractor: React.FC = () => {
     
     setIsLoading(true);
     try {
-      // In a real application, you would use pdf.js or another library to extract text
-      // This is a simulated text extraction
-      
-      // Check if the file is loaded
+      // Using PDF.js to extract the text from the PDF
       const fileArrayBuffer = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(fileArrayBuffer);
-      const pageCount = pdfDoc.getPageCount();
       
-      // For demo purposes, we'll generate dummy text
-      let simulatedText = '';
+      // Load the PDF using PDF.js
+      const loadingTask = pdfjs.getDocument({ data: fileArrayBuffer });
+      const pdf = await loadingTask.promise;
       
-      for (let i = 0; i < pageCount; i++) {
-        simulatedText += `# Content from page ${i + 1}\n\n`;
+      let fullText = '';
+      
+      // Process each page
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
         
-        // Generate some random paragraphs
-        const paragraphCount = 2 + Math.floor(Math.random() * 3);
-        for (let p = 0; p < paragraphCount; p++) {
-          const sentenceCount = 3 + Math.floor(Math.random() * 5);
-          for (let s = 0; s < sentenceCount; s++) {
-            const wordCount = 5 + Math.floor(Math.random() * 10);
-            const words = Array(wordCount).fill(0).map(() => {
-              const length = 3 + Math.floor(Math.random() * 8);
-              return 'lorem'.substring(0, length) + 'ipsum'.substring(0, Math.random() * 5);
-            });
+        // Add page number header
+        fullText += `# Page ${i}\n\n`;
+        
+        // Process text items
+        let lastY = null;
+        let textChunk = '';
+        
+        for (const item of textContent.items) {
+          if ('str' in item) {
+            // Check if we should add a newline based on Y position (indicates paragraph breaks)
+            const currentY = item.transform[5]; // Y position in the transform matrix
             
-            simulatedText += words.join(' ') + '. ';
+            if (lastY !== null && preserveFormatting && Math.abs(lastY - currentY) > 5) {
+              textChunk += '\n\n'; // Add paragraph break
+            }
+            
+            textChunk += item.str + ' ';
+            lastY = currentY;
           }
-          simulatedText += '\n\n';
         }
         
-        // Add some structured content
-        if (i === 0) {
-          simulatedText += "Document Title: " + file.name.replace('.pdf', '') + "\n";
-          simulatedText += "Date: " + new Date().toLocaleDateString() + "\n\n";
-        }
-        
-        if (i === pageCount - 1) {
-          simulatedText += "--- End of Document ---\n";
-        }
+        fullText += textChunk + '\n\n';
       }
       
-      // If not preserving formatting, remove extra line breaks
+      // If not preserving formatting, normalize the text
       if (!preserveFormatting) {
-        simulatedText = simulatedText
+        fullText = fullText
           .replace(/\n+/g, '\n')
           .replace(/\n/g, ' ')
           .replace(/\s+/g, ' ');
       }
       
-      setExtractedText(simulatedText);
+      setExtractedText(fullText);
       
       toast({
         title: "Success!",
-        description: `Text extracted from ${pageCount} pages`,
+        description: `Text extracted from ${pdf.numPages} page${pdf.numPages !== 1 ? 's' : ''}`,
       });
     } catch (error) {
       console.error('Error extracting text:', error);
@@ -154,6 +154,7 @@ const PDFTextExtractor: React.FC = () => {
     link.href = url;
     link.download = file ? file.name.replace('.pdf', '.txt') : 'extracted-text.txt';
     link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
