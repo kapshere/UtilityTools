@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ToolsGrid from '@/components/ui/ToolsGrid';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Gamepad2 } from 'lucide-react';
 import { tools } from '@/data/tools';
 import type { ToolType } from '@/data/tools';
 
@@ -80,10 +80,12 @@ const categoryConfigs = {
     title: 'Game Tools',
     description: 'Fun tools for games and entertainment',
     filter: (tool: ToolType) => 
+      tool.category.id === "games" || 
       tool.name.toLowerCase().includes('game') || 
       tool.description.toLowerCase().includes('game') ||
-      tool.name.toLowerCase().includes('random') ||
+      tool.name.toLowerCase().includes('dice') ||
       tool.description.toLowerCase().includes('dice'),
+    icon: Gamepad2,
     iconColor: 'text-pink-500'
   }
 };

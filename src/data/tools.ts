@@ -1,4 +1,3 @@
-
 import { 
   Calculator, Clock, Calendar, QrCode, Ruler, Compass, 
   FileText, FileImage, FileVideo, FileAudio, Map, Globe, 
@@ -10,7 +9,8 @@ import {
   Type, Quote, List, ListOrdered, Binary, BrainCircuit, 
   Cpu, Monitor, Scan, Search, FileJson, Fingerprint, 
   FileDiff, Regex, XCircle, Check, ChevronRight, Trophy,
-  File, Briefcase, TrendingUp
+  File, Briefcase, TrendingUp, Gamepad2, Strategy, Target,
+  Coins, Hand
 } from "lucide-react";
 
 export type ToolType = {
@@ -130,7 +130,14 @@ export const categories: ToolCategoryType[] = [
     description: "Tools for data analysis and visualization",
     icon: AreaChart,
     color: "bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
-  }
+  },
+  {
+    id: "games",
+    name: "Game Tools",
+    description: "Fun tools for games and entertainment",
+    icon: Gamepad2,
+    color: "bg-pink-50 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400"
+  },
 ];
 
 export const tools: ToolType[] = [
@@ -619,5 +626,42 @@ export const tools: ToolType[] = [
     category: categories.find(c => c.id === "business")!,
     path: "/tools/roi-calculator",
     icon: TrendingUp
-  }
+  },
+  {
+    id: "dice-roller",
+    name: "Dice Roller",
+    description: "Roll virtual dice for games, RPGs, or random generation",
+    category: categories.find(c => c.id === "games")!,
+    path: "/tools/dice-roller",
+    icon: Dices,
+    featured: true,
+    new: true
+  },
+  {
+    id: "rock-paper-scissors",
+    name: "Rock Paper Scissors",
+    description: "Play the classic game against the computer",
+    category: categories.find(c => c.id === "games")!,
+    path: "/tools/rock-paper-scissors",
+    icon: Hand,
+    new: true
+  },
+  {
+    id: "coin-flipper",
+    name: "Coin Flipper",
+    description: "Flip a virtual coin for decision making or games",
+    category: categories.find(c => c.id === "games")!,
+    path: "/tools/coin-flipper",
+    icon: Coins,
+    new: true
+  },
+  {
+    id: "number-guessing-game",
+    name: "Number Guessing Game",
+    description: "Try to guess the hidden number with feedback",
+    category: categories.find(c => c.id === "games")!,
+    path: "/tools/number-guessing-game",
+    icon: Target,
+    new: true
+  },
 ];

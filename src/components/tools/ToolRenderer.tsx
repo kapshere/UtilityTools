@@ -1,3 +1,4 @@
+
 import React, { useContext, createContext } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
@@ -22,6 +23,10 @@ import PDFSplitter from './PDFSplitter';
 import PDFCompressor from './PDFCompressor';
 import PDFToImage from './PDFToImage';
 import PDFTextExtractor from './PDFTextExtractor';
+import DiceRoller from './DiceRoller';
+import RockPaperScissors from './RockPaperScissors';
+import CoinFlipper from './CoinFlipper';
+import NumberGuessingGame from './NumberGuessingGame';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -64,6 +69,10 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'pdf-compressor': PDFCompressor,
     'pdf-to-image': PDFToImage,
     'pdf-text-extractor': PDFTextExtractor,
+    'dice-roller': DiceRoller,
+    'rock-paper-scissors': RockPaperScissors,
+    'coin-flipper': CoinFlipper,
+    'number-guessing-game': NumberGuessingGame,
   };
 
   return (
