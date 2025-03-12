@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -11,7 +12,6 @@ import {
   MessageSquare, Lightbulb 
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { ToolType } from '@/data/tools';
 
 // Import refactored components
 import LoginForm from '@/components/admin/LoginForm';
@@ -53,6 +53,7 @@ const AdminPanel: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   
+  // State for contact messages and tool suggestions
   const [contactMessages, setContactMessages] = useState<ContactMessage[]>([]);
   const [toolSuggestions, setToolSuggestions] = useState<ToolSuggestion[]>([]);
   const [replyingTo, setReplyingTo] = useState<ContactMessage | null>(null);
@@ -62,6 +63,7 @@ const AdminPanel: React.FC = () => {
   const [reviewingTool, setReviewingTool] = useState<ToolSuggestion | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
 
+  // Fetch messages and suggestions when admin is logged in
   useEffect(() => {
     if (isAdmin) {
       fetchContactMessages();
@@ -69,6 +71,7 @@ const AdminPanel: React.FC = () => {
     }
   }, [isAdmin]);
 
+  // Fetch contact messages
   const fetchContactMessages = async () => {
     try {
       setIsLoading(true);
@@ -92,6 +95,7 @@ const AdminPanel: React.FC = () => {
     }
   };
   
+  // Fetch tool suggestions
   const fetchToolSuggestions = async () => {
     try {
       setIsLoading(true);
@@ -115,6 +119,7 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  // Send reply to contact message
   const sendReply = async () => {
     if (!replyingTo) return;
     
@@ -129,6 +134,7 @@ const AdminPanel: React.FC = () => {
       
       if (error) throw error;
       
+      // Update the local state
       setContactMessages(messages => 
         messages.map(msg => 
           msg.id === replyingTo.id 
@@ -156,6 +162,7 @@ const AdminPanel: React.FC = () => {
     }
   };
   
+  // Review tool suggestion
   const reviewToolSuggestion = async (approved: boolean) => {
     if (!reviewingTool) return;
     
@@ -170,6 +177,7 @@ const AdminPanel: React.FC = () => {
       
       if (error) throw error;
       
+      // Update the local state
       setToolSuggestions(suggestions => 
         suggestions.map(suggestion => 
           suggestion.id === reviewingTool.id 
@@ -196,6 +204,7 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  // Open dialogs
   const openReplyDialog = (message: ContactMessage) => {
     setReplyingTo(message);
     setReplyMessage(message.reply_text || '');
@@ -292,6 +301,7 @@ const AdminPanel: React.FC = () => {
         )}
       </main>
       
+      {/* Dialogs */}
       <EditToolDialog 
         isOpen={isEditDialogOpen}
         setIsOpen={setIsEditDialogOpen}
