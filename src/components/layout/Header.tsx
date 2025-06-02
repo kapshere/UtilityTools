@@ -17,16 +17,13 @@ import {
   ChevronDown, 
   Home, 
   Grid3X3, 
-  Heart, 
   Search, 
-  HelpCircle, 
   Settings, 
   MoonStar, 
   Sun,
   ShieldCheck, 
   Clock,
-  Star,
-  Lightbulb
+  Star
 } from 'lucide-react';
 
 const Header: React.FC = () => {
@@ -85,9 +82,6 @@ const Header: React.FC = () => {
       ]
     },
     { icon: <Grid3X3 size={16} />, text: 'Categories', path: '/categories' },
-    { icon: <Heart size={16} />, text: 'Favorites', path: '/favorites' },
-    { icon: <Lightbulb size={16} />, text: 'Suggest Tool', path: '/suggest-tool' },
-    { icon: <HelpCircle size={16} />, text: 'Support', path: '/support' },
   ];
 
   if (isAdmin) {
@@ -100,7 +94,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center">
-            <span className="font-bold text-xl">Tools<span className="text-primary">Hub</span></span>
+            <span className="font-bold text-xl">Utility<span className="text-primary">Tools</span></span>
           </Link>
 
           {/* Search Bar - Shown on larger screens */}

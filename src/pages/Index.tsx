@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -401,71 +402,6 @@ const Index: React.FC = () => {
                 View All Tools
               </Link>
             </Button>
-          </div>
-        </section>
-        
-        <section className="py-8 sm:py-12 container mx-auto px-4 mt-6">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-2xl p-6 sm:p-10 shadow-md">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-                <LifeBuoy className="w-8 h-8 text-primary" />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Need Help?</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Our support team is always ready to help you with any questions or issues you might encounter.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/70 dark:bg-gray-800/40 rounded-xl p-6 flex flex-col items-center text-center transition-transform hover:scale-105 shadow-sm hover:shadow-md">
-                <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full mb-4">
-                  <MessageCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Chat Support</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Chat with our support team in real-time for immediate assistance.
-                </p>
-                <Button variant="outline" className="mt-auto">
-                  Start Chat
-                </Button>
-              </div>
-              
-              <div className="bg-white/70 dark:bg-gray-800/40 rounded-xl p-6 flex flex-col items-center text-center transition-transform hover:scale-105 shadow-sm hover:shadow-md">
-                <div className="bg-green-100 dark:bg-green-900/40 p-3 rounded-full mb-4">
-                  <Mail className="w-6 h-6 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Email Support</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Send us an email and we'll get back to you within 24 hours.
-                </p>
-                <Button variant="outline" className="mt-auto">
-                  Email Us
-                </Button>
-              </div>
-              
-              <div className="bg-white/70 dark:bg-gray-800/40 rounded-xl p-6 flex flex-col items-center text-center transition-transform hover:scale-105 shadow-sm hover:shadow-md">
-                <div className="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full mb-4">
-                  <HelpCircle className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Help Center</h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Browse our knowledge base for tutorials and FAQs.
-                </p>
-                <Button variant="outline" className="mt-auto">
-                  Visit Help Center
-                </Button>
-              </div>
-            </div>
-            
-            <div className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground mb-4">Can't find what you're looking for?</p>
-              <Button asChild>
-                <Link to="/support">
-                  <LifeBuoy className="w-4 h-4 mr-2" />
-                  Go to Support Page
-                </Link>
-              </Button>
-            </div>
           </div>
         </section>
       </main>
