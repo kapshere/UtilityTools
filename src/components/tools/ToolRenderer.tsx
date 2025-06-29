@@ -1,3 +1,4 @@
+
 import React, { useContext, createContext } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
@@ -30,6 +31,7 @@ import LoanCalculator from './LoanCalculator';
 import CurrencyConverter from './CurrencyConverter';
 import RandomGenerator from './RandomGenerator';
 import UuidGenerator from './UuidGenerator';
+import BarcodeGenerator from './BarcodeGenerator';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -80,6 +82,7 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'currency-converter': CurrencyConverter,
     'random-generator': RandomGenerator,
     'uuid-generator': UuidGenerator,
+    'barcode-generator': BarcodeGenerator,
   };
 
   return (
