@@ -1,5 +1,4 @@
-
-import React, { useContext, createContext } from 'react';
+import React, { useContext, createContext, lazy } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
 import DateCalculator from './DateCalculator';
@@ -95,6 +94,16 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'svg-optimizer': SvgOptimizer,
     'image-cropper': ImageCropper,
     'image-resizer': ImageResizer,
+    'ip-lookup': React.lazy(() => import('./IpLookup')),
+    'invoice-generator': React.lazy(() => import('./InvoiceGenerator')),
+    'expense-calculator': React.lazy(() => import('./ExpenseCalculator')),
+    'profit-margin-calculator': React.lazy(() => import('./ProfitMarginCalculator')),
+    'business-name-generator': React.lazy(() => import('./BusinessNameGenerator')),
+    'roi-calculator': React.lazy(() => import('./RoiCalculator')),
+    'code-beautifier': React.lazy(() => import('./CodeBeautifier')),
+    'jwt-decoder': React.lazy(() => import('./JwtDecoder')),
+    'sql-formatter': React.lazy(() => import('./SqlFormatter')),
+    'js-minifier': React.lazy(() => import('./JavaScriptMinifier')),
   };
 
   return (
