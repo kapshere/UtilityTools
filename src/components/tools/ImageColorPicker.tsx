@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,14 +27,14 @@ const ImageColorPicker: React.FC = () => {
     }
   };
 
-  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const pickColorAtPosition = (clientX: number, clientY: number, targetElement: HTMLElement) => {
     const canvas = canvasRef.current;
     const img = imageRef.current;
     if (!canvas || !img) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const rect = targetElement.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
     
     setCursorPosition({ x, y });
 
@@ -47,6 +46,14 @@ const ImageColorPicker: React.FC = () => {
     
     const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     setSelectedColor(hex);
+  };
+
+  const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
+    pickColorAtPosition(event.clientX, event.clientY, event.currentTarget);
+  };
+
+  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    pickColorAtPosition(event.clientX, event.clientY, event.currentTarget);
   };
 
   const formatColor = (hex: string) => {
@@ -154,7 +161,7 @@ const ImageColorPicker: React.FC = () => {
                   alt="Color picker"
                   className="max-w-full h-auto cursor-crosshair"
                   onLoad={loadImageToCanvas}
-                  onClick={handleCanvasClick}
+                  onClick={handleImageClick}
                 />
                 <canvas
                   ref={canvasRef}
