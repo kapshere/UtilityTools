@@ -1,4 +1,3 @@
-
 import React, { useContext, createContext } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
@@ -32,6 +31,8 @@ import CurrencyConverter from './CurrencyConverter';
 import RandomGenerator from './RandomGenerator';
 import UuidGenerator from './UuidGenerator';
 import BarcodeGenerator from './BarcodeGenerator';
+import BinaryConverter from './BinaryConverter';
+import ChecksumCalculator from './ChecksumCalculator';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -83,6 +84,8 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'random-generator': RandomGenerator,
     'uuid-generator': UuidGenerator,
     'barcode-generator': BarcodeGenerator,
+    'binary-converter': BinaryConverter,
+    'checksum-calculator': ChecksumCalculator,
   };
 
   return (
