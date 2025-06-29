@@ -182,7 +182,7 @@ export const tools: ToolType[] = [
     name: "Base64 Encoder/Decoder",
     description: "Encode or decode Base64 data",
     category: categories.find(c => c.id === "encoding")!,
-    path: "/tools/base64",
+    path: "/tools/base64-encoder",
     icon: RefreshCcw
   },
   {

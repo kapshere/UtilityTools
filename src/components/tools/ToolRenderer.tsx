@@ -1,3 +1,4 @@
+
 import React, { useContext, createContext } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
@@ -33,7 +34,11 @@ import UuidGenerator from './UuidGenerator';
 import BarcodeGenerator from './BarcodeGenerator';
 import BinaryConverter from './BinaryConverter';
 import ChecksumCalculator from './ChecksumCalculator';
-import { useToast } from '@/components/ui/use-toast';
+import ImageColorPicker from './ImageColorPicker';
+import SvgOptimizer from './SvgOptimizer';
+import ImageCropper from './ImageCropper';
+import ImageResizer from './ImageResizer';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 interface ToolRendererProps {
@@ -86,6 +91,10 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'barcode-generator': BarcodeGenerator,
     'binary-converter': BinaryConverter,
     'checksum-calculator': ChecksumCalculator,
+    'image-color-picker': ImageColorPicker,
+    'svg-optimizer': SvgOptimizer,
+    'image-cropper': ImageCropper,
+    'image-resizer': ImageResizer,
   };
 
   return (
