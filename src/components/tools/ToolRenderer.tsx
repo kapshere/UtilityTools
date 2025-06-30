@@ -1,3 +1,4 @@
+
 import React, { useContext, createContext, lazy } from 'react';
 import Calculator from './Calculator';
 import UnitConverter from './UnitConverter';
@@ -37,6 +38,16 @@ import ImageColorPicker from './ImageColorPicker';
 import SvgOptimizer from './SvgOptimizer';
 import ImageCropper from './ImageCropper';
 import ImageResizer from './ImageResizer';
+import IpLookup from './IpLookup';
+import InvoiceGenerator from './InvoiceGenerator';
+import ExpenseCalculator from './ExpenseCalculator';
+import ProfitMarginCalculator from './ProfitMarginCalculator';
+import BusinessNameGenerator from './BusinessNameGenerator';
+import RoiCalculator from './RoiCalculator';
+import CodeBeautifier from './CodeBeautifier';
+import JwtDecoder from './JwtDecoder';
+import SqlFormatter from './SqlFormatter';
+import JavaScriptMinifier from './JavaScriptMinifier';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -94,16 +105,16 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'svg-optimizer': SvgOptimizer,
     'image-cropper': ImageCropper,
     'image-resizer': ImageResizer,
-    'ip-lookup': React.lazy(() => import('./IpLookup')),
-    'invoice-generator': React.lazy(() => import('./InvoiceGenerator')),
-    'expense-calculator': React.lazy(() => import('./ExpenseCalculator')),
-    'profit-margin-calculator': React.lazy(() => import('./ProfitMarginCalculator')),
-    'business-name-generator': React.lazy(() => import('./BusinessNameGenerator')),
-    'roi-calculator': React.lazy(() => import('./RoiCalculator')),
-    'code-beautifier': React.lazy(() => import('./CodeBeautifier')),
-    'jwt-decoder': React.lazy(() => import('./JwtDecoder')),
-    'sql-formatter': React.lazy(() => import('./SqlFormatter')),
-    'js-minifier': React.lazy(() => import('./JavaScriptMinifier')),
+    'ip-lookup': IpLookup,
+    'invoice-generator': InvoiceGenerator,
+    'expense-calculator': ExpenseCalculator,
+    'profit-margin-calculator': ProfitMarginCalculator,
+    'business-name-generator': BusinessNameGenerator,
+    'roi-calculator': RoiCalculator,
+    'code-beautifier': CodeBeautifier,
+    'jwt-decoder': JwtDecoder,
+    'sql-formatter': SqlFormatter,
+    'js-minifier': JavaScriptMinifier,
   };
 
   return (
