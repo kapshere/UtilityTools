@@ -10,7 +10,7 @@ import {
   Cpu, Monitor, Scan, Search, FileJson, Fingerprint, 
   FileDiff, Regex, XCircle, Check, ChevronRight, Trophy,
   File, Briefcase, TrendingUp, Gamepad2, Target,
-  Coins, Hand
+  Coins, Hand, PiggyBank, Repeat
 } from "lucide-react";
 
 export type ToolType = {
@@ -395,28 +395,12 @@ export const tools: ToolType[] = [
     icon: Hash
   },
   {
-    id: "image-to-base64",
-    name: "Image to Base64",
-    description: "Convert image to Base64 encoding",
-    category: categories.find(c => c.id === "transforms")!,
-    path: "/tools/image-to-base64",
-    icon: FileImage
-  },
-  {
     id: "aspect-ratio-calculator",
     name: "Aspect Ratio Calculator",
     description: "Calculate and maintain aspect ratios",
     category: categories.find(c => c.id === "calculation")!,
     path: "/tools/aspect-ratio-calculator",
     icon: Maximize
-  },
-  {
-    id: "json-to-csv",
-    name: "JSON to CSV",
-    description: "Convert JSON to CSV format",
-    category: categories.find(c => c.id === "transforms")!,
-    path: "/tools/json-to-csv",
-    icon: FileText
   },
   {
     id: "lorem-ipsum-generator",
@@ -441,30 +425,6 @@ export const tools: ToolType[] = [
     category: categories.find(c => c.id === "development")!,
     path: "/tools/js-minifier",
     icon: Code
-  },
-  {
-    id: "yaml-to-json",
-    name: "YAML to JSON",
-    description: "Convert YAML to JSON format",
-    category: categories.find(c => c.id === "transforms")!,
-    path: "/tools/yaml-to-json",
-    icon: RefreshCcw
-  },
-  {
-    id: "json-to-yaml",
-    name: "JSON to YAML",
-    description: "Convert JSON to YAML format",
-    category: categories.find(c => c.id === "transforms")!,
-    path: "/tools/json-to-yaml",
-    icon: RefreshCcw
-  },
-  {
-    id: "csv-to-json",
-    name: "CSV to JSON",
-    description: "Convert CSV to JSON format",
-    category: categories.find(c => c.id === "transforms")!,
-    path: "/tools/csv-to-json",
-    icon: RefreshCcw
   },
   {
     id: "uuid-generator",
@@ -663,5 +623,74 @@ export const tools: ToolType[] = [
     path: "/tools/number-guessing-game",
     icon: Target,
     new: true
+  },
+  {
+    id: "fixed-deposit-calculator",
+    name: "Fixed Deposit Calculator",
+    description: "Calculate returns on fixed deposit investments",
+    category: categories.find(c => c.id === "finance")!,
+    path: "/tools/fixed-deposit-calculator",
+    icon: PiggyBank,
+    new: true
+  },
+  {
+    id: "recurring-deposit-calculator",
+    name: "Recurring Deposit Calculator", 
+    description: "Calculate returns on recurring deposit investments",
+    category: categories.find(c => c.id === "finance")!,
+    path: "/tools/recurring-deposit-calculator",
+    icon: Repeat,
+    new: true
+  },
+  {
+    id: "mutual-fund-calculator",
+    name: "Mutual Fund Calculator",
+    description: "Calculate SIP and lump sum mutual fund returns",
+    category: categories.find(c => c.id === "finance")!,
+    path: "/tools/mutual-fund-calculator",
+    icon: AreaChart,
+    featured: true,
+    new: true
+  },
+  {
+    id: "image-to-base64",
+    name: "Image to Base64",
+    description: "Convert image to Base64 encoding",
+    category: categories.find(c => c.id === "transforms")!,
+    path: "/tools/image-to-base64",
+    icon: FileImage
+  },
+  {
+    id: "json-to-csv",
+    name: "JSON to CSV",
+    description: "Convert JSON to CSV format",
+    category: categories.find(c => c.id === "transforms")!,
+    path: "/tools/json-to-csv",
+    icon: FileText,
+    featured: true
+  },
+  {
+    id: "csv-to-json",
+    name: "CSV to JSON",
+    description: "Convert CSV to JSON format",
+    category: categories.find(c => c.id === "transforms")!,
+    path: "/tools/csv-to-json",
+    icon: RefreshCcw
+  },
+  {
+    id: "yaml-to-json",
+    name: "YAML to JSON",
+    description: "Convert YAML to JSON format",
+    category: categories.find(c => c.id === "transforms")!,
+    path: "/tools/yaml-to-json",
+    icon: RefreshCcw
+  },
+  {
+    id: "json-to-yaml",
+    name: "JSON to YAML",
+    description: "Convert JSON to YAML format",
+    category: categories.find(c => c.id === "transforms")!,
+    path: "/tools/json-to-yaml",
+    icon: RefreshCcw
   },
 ];

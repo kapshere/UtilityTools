@@ -48,6 +48,14 @@ import CodeBeautifier from './CodeBeautifier';
 import JwtDecoder from './JwtDecoder';
 import SqlFormatter from './SqlFormatter';
 import JavaScriptMinifier from './JavaScriptMinifier';
+import FixedDepositCalculator from './FixedDepositCalculator';
+import RecurringDepositCalculator from './RecurringDepositCalculator';
+import MutualFundCalculator from './MutualFundCalculator';
+import ImageToBase64 from './ImageToBase64';
+import JsonToCsv from './JsonToCsv';
+import CsvToJson from './CsvToJson';
+import YamlToJson from './YamlToJson';
+import JsonToYaml from './JsonToYaml';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -115,6 +123,14 @@ export const ToolsProvider: React.FC<{children: React.ReactNode}> = ({ children 
     'jwt-decoder': JwtDecoder,
     'sql-formatter': SqlFormatter,
     'js-minifier': JavaScriptMinifier,
+    'fixed-deposit-calculator': FixedDepositCalculator,
+    'recurring-deposit-calculator': RecurringDepositCalculator,
+    'mutual-fund-calculator': MutualFundCalculator,
+    'image-to-base64': ImageToBase64,
+    'json-to-csv': JsonToCsv,
+    'csv-to-json': CsvToJson,
+    'yaml-to-json': YamlToJson,
+    'json-to-yaml': JsonToYaml,
   };
 
   return (
