@@ -1,11 +1,11 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Download, Plus, Trash2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Download, Plus, Trash2, IndianRupee } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface InvoiceItem {
@@ -23,10 +23,27 @@ interface CompanyInfo {
   phone: string;
 }
 
+interface Currency {
+  code: string;
+  symbol: string;
+  name: string;
+}
+
+const currencies: Currency[] = [
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
+  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+];
+
 const InvoiceGenerator: React.FC = () => {
   const [invoiceNumber, setInvoiceNumber] = useState('INV-001');
   const [invoiceDate, setInvoiceDate] = useState(new Date().toISOString().split('T')[0]);
   const [dueDate, setDueDate] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(currencies[0]); // Default to INR
   
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo>({
     name: '',
@@ -122,7 +139,8 @@ const InvoiceGenerator: React.FC = () => {
         
         <div class="invoice-details">
           <strong>Invoice Date:</strong> ${invoiceDate}<br>
-          <strong>Due Date:</strong> ${dueDate}
+          <strong>Due Date:</strong> ${dueDate}<br>
+          <strong>Currency:</strong> ${selectedCurrency.name} (${selectedCurrency.code})
         </div>
         
         <table>
@@ -139,17 +157,17 @@ const InvoiceGenerator: React.FC = () => {
               <tr>
                 <td>${item.description}</td>
                 <td>${item.quantity}</td>
-                <td>$${item.rate.toFixed(2)}</td>
-                <td>$${item.amount.toFixed(2)}</td>
+                <td>${selectedCurrency.symbol}${item.rate.toFixed(2)}</td>
+                <td>${selectedCurrency.symbol}${item.amount.toFixed(2)}</td>
               </tr>
             `).join('')}
           </tbody>
         </table>
         
         <div class="totals">
-          <p><strong>Subtotal: $${subtotal.toFixed(2)}</strong></p>
-          <p><strong>Tax (10%): $${tax.toFixed(2)}</strong></p>
-          <p><strong>Total: $${total.toFixed(2)}</strong></p>
+          <p><strong>Subtotal: ${selectedCurrency.symbol}${subtotal.toFixed(2)}</strong></p>
+          <p><strong>Tax (10%): ${selectedCurrency.symbol}${tax.toFixed(2)}</strong></p>
+          <p><strong>Total: ${selectedCurrency.symbol}${total.toFixed(2)}</strong></p>
         </div>
         
         ${notes ? `<div><strong>Notes:</strong><br>${notes}</div>` : ''}
@@ -209,6 +227,27 @@ const InvoiceGenerator: React.FC = () => {
                   onChange={(e) => setDueDate(e.target.value)}
                 />
               </div>
+            </div>
+            <div>
+              <Label htmlFor="currency">Currency</Label>
+              <Select value={selectedCurrency.code} onValueChange={(value) => {
+                const currency = currencies.find(c => c.code === value);
+                if (currency) setSelectedCurrency(currency);
+              }}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  {currencies.map((currency) => (
+                    <SelectItem key={currency.code} value={currency.code}>
+                      <div className="flex items-center gap-2">
+                        {currency.code === 'INR' && <IndianRupee className="h-4 w-4" />}
+                        <span>{currency.symbol} {currency.code} - {currency.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </Card>
@@ -298,7 +337,7 @@ const InvoiceGenerator: React.FC = () => {
                 onChange={(e) => updateItem(item.id, 'rate', Number(e.target.value))}
                 className="w-24"
               />
-              <div className="w-24 text-right">${item.amount.toFixed(2)}</div>
+              <div className="w-24 text-right">{selectedCurrency.symbol}{item.amount.toFixed(2)}</div>
               <Button
                 onClick={() => removeItem(item.id)}
                 size="sm"
@@ -312,9 +351,9 @@ const InvoiceGenerator: React.FC = () => {
         </div>
 
         <div className="mt-6 space-y-2 text-right">
-          <p>Subtotal: ${subtotal.toFixed(2)}</p>
-          <p>Tax (10%): ${tax.toFixed(2)}</p>
-          <p className="text-lg font-semibold">Total: ${total.toFixed(2)}</p>
+          <p>Subtotal: {selectedCurrency.symbol}{subtotal.toFixed(2)}</p>
+          <p>Tax (10%): {selectedCurrency.symbol}{tax.toFixed(2)}</p>
+          <p className="text-lg font-semibold">Total: {selectedCurrency.symbol}{total.toFixed(2)}</p>
         </div>
       </Card>
 
